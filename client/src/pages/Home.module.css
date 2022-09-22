@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@700&display=swap');
+
+.home {
+  height: 100vh;
+  width: 100vw;
+  background-color: #f0f2f5;
+}
+
+/* MAIN */
+.home main {
+  max-width: 985px;
+  margin: 0 auto;
+  width: 85%;
+}
+
+/* LOGO */
+.logo {
+  text-align: center;
+  padding-top: 2rem;
+}
+
+.logo h1 {
+  font-family: 'Figtree', sans-serif;
+  color: #1877f2;
+  font-size: 60px;
+  padding-bottom: 10px;
+}
+
+.logo p {
+  font-size: 24px;
+}
+
+/* FORM */
+.home form {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  margin-top: 45px;
+}
+
+.home form input {
+  font-size: 17px;
+  padding: 14px 16px;
+  border-radius: 6px;
+  border: 1px solid #dddfe2;
+}
+
+.home form input:focus {
+  outline: 1px solid #1877f2;
+}
+
+#hr {
+  border-bottom: 1px solid #dadde1;
+}
+
+.home form button {
+  background-color: #1877f2;
+  border-radius: 6px;
+  font-size: 20px;
+  padding: 15px;
+  border: none;
+  font-weight: bold;
+  color: #fff;
+}
+
+.home form button:hover {
+  background-color: #166fe5;
+}
+
+.home .upper_form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* NEW ACCOUNT BUTTON */
+#new_account_btn {
+  background-color: #42b72a;
+  width: 65%;
+  margin: 30px auto;
+  display: block;
+  font-size: 17px;
+}
+
+#new_account_btn:hover {
+  background: #36a420;
+}
+
+@media (min-width: 885px) {
+  .home main {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 130px;
+    width: 90%;
+  }
+  .home .logo {
+    flex-basis: 45%;
+    text-align: left;
+    padding-top: 70px;
+  }
+  .home form {
+    flex-basis: 45%;
+  }
+}
