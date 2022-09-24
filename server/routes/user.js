@@ -1,0 +1,54 @@
+const express = require('express');
+const router = express.Router();
+const User = require('../models/user');
+const { body, validationResult } = require('express-validator');
+
+router.get('/', (req, res) => {
+  res.send('user route');
+});
+
+// post request to /users to create a new user
+router.post(
+  '/',
+  body('firstName').trim(),
+  body('surname').trim(),
+  body('username')
+    .trim()
+    .isAlphanumeric()
+    .withMessage('Username to contain only numbers and letters please')
+    .custom((value) => {
+      console.log(value);
+      return User.findOne({ username: value }).then((user) => {
+        console.log(user);
+        if (user) {
+          return Promise.reject('Username already in use, please try another');
+        }
+      });
+    }),
+  body('password')
+    .isAlphanumeric()
+    .withMessage('No spaces in password please')
+    .isLength({ min: 5 })
+    .withMessage('password must be at least 5 characters long please'),
+  body('confirmPassword').custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error('Password confirmation does not match password');
+    }
+    return true;
+  }),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const user = await User.create({
+      firstName: req.body.firstName,
+      surname: req.body.surname,
+      username: req.body.username,
+      password: req.body.password,
+    });
+    res.json(user);
+  }
+);
+
+module.exports = router;
