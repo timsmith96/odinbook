@@ -1,27 +1,16 @@
 import styles from './Signup.module.css';
 import { ReactComponent as CloseSvg } from '../../assets/icons/closeIcon.svg';
-import { useState } from 'react';
 
-export default function Signup({ onCloseClick, display }) {
-  const [errors, setErrors] = useState([]);
-  const [form, setForm] = useState({
-    firstName: '',
-    surname: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const handleInputChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
+export default function Signup({
+  onCloseClick,
+  display,
+  form,
+  onInputChange,
+  errors,
+  onError,
+}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try/catch up here to see if we can catch the errors like that?
     const res = await fetch('http://localhost:3000/users', {
       method: 'POST',
       mode: 'cors',
@@ -31,7 +20,11 @@ export default function Signup({ onCloseClick, display }) {
       body: JSON.stringify(form),
     });
     const json = await res.json();
-    setErrors(json.errors);
+    if (res.status === 400) {
+      onError(json.errors);
+    } else {
+      console.log('success');
+    }
   };
 
   return (
@@ -47,7 +40,7 @@ export default function Signup({ onCloseClick, display }) {
           <input
             value={form.firstName}
             name="firstName"
-            onChange={handleInputChange}
+            onChange={onInputChange}
             className={styles.input}
             type="text"
             placeholder="First name"
@@ -56,7 +49,7 @@ export default function Signup({ onCloseClick, display }) {
           <input
             value={form.surname}
             name="surname"
-            onChange={handleInputChange}
+            onChange={onInputChange}
             type="text"
             className={styles.input}
             placeholder="Surname"
@@ -66,7 +59,7 @@ export default function Signup({ onCloseClick, display }) {
         <input
           value={form.username}
           name="username"
-          onChange={handleInputChange}
+          onChange={onInputChange}
           className={styles.input}
           type="text"
           placeholder="Username"
@@ -75,7 +68,7 @@ export default function Signup({ onCloseClick, display }) {
         <input
           value={form.password}
           name="password"
-          onChange={handleInputChange}
+          onChange={onInputChange}
           className={styles.input}
           type="password"
           placeholder="Password"
@@ -84,7 +77,7 @@ export default function Signup({ onCloseClick, display }) {
         <input
           value={form.confirmPassword}
           name="confirmPassword"
-          onChange={handleInputChange}
+          onChange={onInputChange}
           className={styles.input}
           type="password"
           placeholder="Confirm password"

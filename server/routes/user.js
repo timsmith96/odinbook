@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 router.get('/', (req, res) => {
   res.send('user route');
@@ -45,9 +46,9 @@ router.post(
       firstName: req.body.firstName,
       surname: req.body.surname,
       username: req.body.username,
-      password: req.body.password,
+      password: bcrypt.hashSync(req.body.password, 10),
     });
-    res.json(user);
+    return res.json(user);
   }
 );
 
