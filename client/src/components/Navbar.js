@@ -1,6 +1,6 @@
 import styles from './Navbar.module.css';
 import { Link } from 'react-router-dom';
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState } from 'react';
 import { ReactComponent as Hamburger } from '../assets/icons/navbar/hamburger.svg';
 import { ReactComponent as Home } from '../assets/icons/navbar/home.svg';
 import { ReactComponent as Friends } from '../assets/icons/navbar/friends.svg';

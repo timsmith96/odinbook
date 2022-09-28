@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import styles from './Home.module.css';
 import Signup from './Signup';
@@ -18,6 +19,7 @@ export default function Home() {
   const [password, setPassword] = useState();
   const [signInError, setSignInError] = useState();
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   // username input change
   const handleUsernameInputChange = (e) => {
@@ -31,19 +33,21 @@ export default function Home() {
 
   // log in form being submitted
   const handleSubmit = async (e) => {
-    console.log(username, password);
     e.preventDefault();
     const res = await fetch('http://localhost:3000/login', {
       method: 'POST',
       mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ username: username, password: password }),
+      credentials: 'include',
     });
     const json = await res.json();
     if (res.status === 401) {
       setSignInError(json);
     } else {
-      setSignInError('logged in successfully');
+      navigate('/feed');
     }
   };
 

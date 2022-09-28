@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema(
@@ -10,7 +11,11 @@ const userSchema = new mongoose.Schema(
       unique: true,
       required: true,
     },
+    friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
+    likedPosts: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     password: { type: String, required: true },
+    passwordReadable: { type: String, required: false },
   },
   { timestamps: true }
 );

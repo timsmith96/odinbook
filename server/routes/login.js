@@ -4,7 +4,6 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 router.post('/', (req, res) => {
-  console.log(req.body);
   User.findOne({ username: req.body.username }, (err, user) => {
     // couldn't find user
     if (!user) {
@@ -12,13 +11,11 @@ router.post('/', (req, res) => {
     }
     // could find user
     user.checkPassword(req.body.password).then((data) => {
-      // passwords match - have a token
+      // passwords match - have a token - added to cookies
       if (data) {
-        jwt.sign({ user }, process.env.JWT_KEY, (err, token) => {
-          res.json({
-            token,
-          });
-        });
+        const token = jwt.sign({ user }, process.env.JWT_KEY);
+        res.cookie('token', token);
+        return res.json('log in successful');
       } else {
         // passwords don't match
         return res.status(401).json('password incorrect - please try again');

@@ -1,0 +1,146 @@
+.create_post {
+  width: 670px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  padding: 10px 20px;
+  position: relative;
+}
+
+.title {
+  text-align: center;
+  border-bottom: 1px solid #d8dadf;
+  margin-right: -20px;
+  margin-left: -20px;
+  padding-bottom: 10px;
+}
+
+.close_icon_container {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e4e6eb;
+}
+
+.close_icon_container:hover {
+  cursor: pointer;
+  background-color: #d8dadf;
+}
+
+.user_icon_container {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #bfc2c6;
+}
+
+.upper_row {
+  display: flex;
+  padding: 10px 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.user_icon path {
+  fill: #fff;
+}
+
+.user_name {
+  font-weight: 500;
+}
+
+.create_post_form {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.text_input {
+  border: none;
+  font-size: 25px;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  resize: none;
+}
+
+.text_input:focus {
+  outline: none;
+}
+
+.add_to_post {
+  border: 1px solid #bfc2c6;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  padding: 10px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.add_to_post_icon_container {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photo_icon {
+  width: 35px;
+  height: 35px;
+}
+
+.add_to_post_icon_container:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.add_to_post_text {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.post_button_disabled {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  background-color: #e4e6eb;
+  padding: 15px 0;
+  font-size: 18px;
+  color: #bec2c6;
+  margin-bottom: 10px;
+}
+
+.post_button_enabled {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  background-color: #1877f2;
+  padding: 15px 0;
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.post_button_disabled:hover {
+  cursor: not-allowed;
+}
+
+.post_button_enabled:hover {
+  cursor: pointer;
+  background-color: #166fe5;
+}

@@ -18,9 +18,7 @@ router.post(
     .isAlphanumeric()
     .withMessage('Username to contain only numbers and letters please')
     .custom((value) => {
-      console.log(value);
       return User.findOne({ username: value }).then((user) => {
-        console.log(user);
         if (user) {
           return Promise.reject('Username already in use, please try another');
         }
