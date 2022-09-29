@@ -3,7 +3,12 @@ import { ReactComponent as User } from '../../assets/icons/navbar/user.svg';
 import { ReactComponent as Photo } from '../../assets/icons/photoIcon.svg';
 import { ReactComponent as Close } from '../../assets/icons/closeIcon.svg';
 
-export default function CreatePost({ onSubmit, textEntered, onInputChange }) {
+export default function CreatePost({
+  onSubmit,
+  textEntered,
+  onInputChange,
+  onImageChange,
+}) {
   return (
     <div className={styles.create_post}>
       <h2 className={styles.title}>Create post</h2>
@@ -25,9 +30,15 @@ export default function CreatePost({ onSubmit, textEntered, onInputChange }) {
         ></textarea>
         <div className={styles.add_to_post}>
           <p className={styles.add_to_post_text}>Add to your post</p>
-          <div className={styles.add_to_post_icon_container}>
+          <label htmlFor="file-upload" className={styles.file_input_label}>
             <Photo className={styles.photo_icon} />
-          </div>
+          </label>
+          <input
+            type="file"
+            id="file-upload"
+            onChange={onImageChange}
+            className={styles.file_input}
+          />
         </div>
         <button
           className={`${

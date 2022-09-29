@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
     },
     friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
-    likedPosts: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    likedPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     password: { type: String, required: true },
     passwordReadable: { type: String, required: false },
   },

@@ -102,11 +102,6 @@
   height: 35px;
 }
 
-.add_to_post_icon_container:hover {
-  background-color: #f2f2f2;
-  cursor: pointer;
-}
-
 .add_to_post_text {
   font-weight: 500;
   font-size: 15px;
@@ -143,4 +138,22 @@
 .post_button_enabled:hover {
   cursor: pointer;
   background-color: #166fe5;
+}
+
+.file_input_label {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.file_input_label:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.file_input {
+  display: none;
 }

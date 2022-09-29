@@ -20,17 +20,10 @@ const createRandomUser = () => {
 // POSTS
 const createRandomPost = () => {
   return {
-    user: 
+    user,
+    text: faker.lorem.paragraph(),
   };
 };
-
-{
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
-  text: { type: String },
-  likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
-},
-{ timestamps: true }
 
 // CONNECT TO DB
 mongoose

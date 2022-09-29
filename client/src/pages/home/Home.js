@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import styles from './Home.module.css';
 import Signup from './Signup';
@@ -19,6 +20,7 @@ export default function Home() {
   const [password, setPassword] = useState();
   const [signInError, setSignInError] = useState();
   const [errors, setErrors] = useState([]);
+  const [authError, setAuthError] = useState('');
   const navigate = useNavigate();
 
   // username input change
@@ -73,6 +75,7 @@ export default function Home() {
     <div className={styles.home}>
       <main className={`${modal ? styles.opacity : ''}`}>
         <div className={styles.logo}>
+          <p>{authError} </p>
           <h1>odinbook</h1>
           <p>
             Odinbook helps you connect and share with the people in your life.
