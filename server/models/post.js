@@ -9,6 +9,7 @@ const postSchema = new mongoose.Schema(
     comments: [
       { type: Schema.Types.ObjectId, ref: 'Comment', required: false },
     ],
+    imageName: { type: String, required: false },
   },
   { timestamps: true }
 );

@@ -1,0 +1,128 @@
+.post {
+  max-width: 670px;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  padding: 10px 20px;
+  border: 1px solid red;
+}
+
+/* POST HEADER */
+.post_header_container {
+  display: flex;
+  gap: 20px;
+}
+
+.user_info_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.user_name {
+  font-weight: bold;
+}
+
+.post_date {
+  color: #65676b;
+}
+
+.user_icon_container {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-size: cover;
+}
+
+/* POST TEXT */
+.post_text_container {
+  padding: 15px;
+}
+
+/* POST IMAGE */
+.post_img {
+  max-width: 100%;
+}
+
+/* POST INFO */
+.post_info_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.likes_info_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #65676b;
+}
+
+.likes_icon_container {
+  height: 30px;
+  width: 30px;
+  background-color: #166fe5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.comments_counter {
+  color: #65676b;
+}
+
+.comments_counter:hover {
+  cursor: pointer;
+  border-bottom: 1px solid #65676b;
+}
+
+/* HR */
+.upper_hr {
+  border-bottom: 1px solid #d8dadf;
+  margin-bottom: 10px;
+}
+
+.lower_hr {
+  border-bottom: 1px solid #d8dadf;
+  margin-top: 10px;
+}
+
+/* POST CONTROLS */
+.post_controls_container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.comment_control_container,
+.likes_control_container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  color: #65676b;
+  padding: 0 20px;
+  border-radius: 10px;
+}
+
+.like_icon_container,
+.comment_icon_container {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment_control_container:hover,
+.likes_control_container:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}

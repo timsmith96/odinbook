@@ -7,22 +7,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
-const { S3Client } = require('@aws-sdk/client-s3');
 
 const app = express();
-
-const bucketRegion = process.env.BUCKET_REGION;
-const bucketName = process.env.BUCKET_NAME;
-const awsAccessKey = process.env.AWS_ACCESS_KEY;
-const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-
-const s3 = new S3Client({
-  credentials: {
-    accessKeyId: awsAccessKey,
-    secretAccessKey: awsSecretAccessKey,
-  },
-  region: bucketRegion,
-});
 
 // middlewear
 app.use(cookieParser());

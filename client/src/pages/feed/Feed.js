@@ -3,6 +3,7 @@ import Newpost from './Newpost';
 import CreatePost from './CreatePost';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Post from './Post';
 
 export default function Feed() {
   const [post, setPost] = useState();
@@ -50,6 +51,7 @@ export default function Feed() {
         onInputChange={handleInputChange}
         onImageChange={handleImageChange}
       />
+      <Post />
     </div>
   );
 }
