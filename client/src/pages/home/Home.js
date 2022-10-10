@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
 import styles from './Home.module.css';
 import Signup from './Signup';
 import Signin from './Signin';

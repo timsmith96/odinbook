@@ -1,5 +1,6 @@
 .new_post {
-  width: 670px;
+  max-width: 670px;
+  width: 90%;
   margin: 50px auto;
   background-color: #fff;
   border-radius: 10px;

@@ -63,6 +63,9 @@ a {
   #hamburger_icon {
     display: none;
   }
+  #log_out {
+    display: none;
+  }
   .nav {
     display: flex;
     flex-direction: row;

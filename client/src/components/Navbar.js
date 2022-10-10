@@ -7,6 +7,7 @@ import { ReactComponent as Friends } from '../assets/icons/navbar/friends.svg';
 import { ReactComponent as Plus } from '../assets/icons/navbar/plus.svg';
 import { ReactComponent as Notify } from '../assets/icons/navbar/notify.svg';
 import { ReactComponent as User } from '../assets/icons/navbar/user.svg';
+import { ReactComponent as Logout } from '../assets/icons/navbar/logout.svg';
 
 export default function Navbar() {
   const [dropdown, setDropdown] = useState(false);
@@ -18,7 +19,7 @@ export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <ul className={styles.nav_left}>
-        <Link to="/">
+        <Link to="/feed">
           <img
             src={require('../assets/icons/navbar/facebookIcon.png')}
             alt=""
@@ -61,6 +62,12 @@ export default function Navbar() {
             <User />
           </div>
           <p>Profile</p>
+        </Link>
+        <Link className={styles.container} id={styles.log_out}>
+          <div className={styles.icon_container}>
+            <Logout />
+          </div>
+          <p>Log out</p>
         </Link>
       </ul>
     </nav>

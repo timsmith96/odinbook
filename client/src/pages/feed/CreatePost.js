@@ -8,12 +8,16 @@ export default function CreatePost({
   textEntered,
   onInputChange,
   onImageChange,
+  display,
+  onCloseClick,
 }) {
   return (
-    <div className={styles.create_post}>
-      <h2 className={styles.title}>Create post</h2>
-      <div className={styles.close_icon_container}>
-        <Close className={styles.close_icon} />
+    <div className={`${styles.create_post} ${display ? '' : styles.hide}`}>
+      <div className={styles.header}>
+        <h2 className={styles.title}>Create post</h2>
+        <div className={styles.close_icon_container}>
+          <Close className={styles.close_icon} onClick={onCloseClick} />
+        </div>
       </div>
       <div className={styles.upper_row}>
         <div className={styles.user_icon_container}>

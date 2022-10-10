@@ -8,6 +8,10 @@ router.get('/', (req, res) => {
   res.send('user route');
 });
 
+const titleCase = (str) => {
+  return str[0].toUpperCase() + str.slice(1, str.length);
+};
+
 // post request to /users to create a new user
 router.post(
   '/',
@@ -41,9 +45,9 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     const user = await User.create({
-      firstName: req.body.firstName,
-      surname: req.body.surname,
-      username: req.body.username,
+      firstName: titleCase(req.body.firstName),
+      surname: titleCase(req.body.surname),
+      username: req.body.username.toLowerCase(),
       password: bcrypt.hashSync(req.body.password, 10),
     });
     return res.json(user);

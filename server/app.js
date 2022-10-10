@@ -7,6 +7,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const jwtAuth = require('./middleware/auth');
 
 const app = express();
 
@@ -46,6 +47,10 @@ app.use('/home', routes.home);
 app.use('/users', routes.user);
 app.use('/login', routes.login);
 app.use('/posts', routes.post);
+// jwtAuth adds the user to the request object, then we can send it in the response to react
+app.get('/userplease', jwtAuth, (req, res) => {
+  res.send(req.user);
+});
 
 app.get('/hidden', (req, res) => {
   jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {

@@ -4,7 +4,7 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 router.post('/', (req, res) => {
-  User.findOne({ username: req.body.username }, (err, user) => {
+  User.findOne({ username: req.body.username.toLowerCase() }, (err, user) => {
     // couldn't find user
     if (!user) {
       return res.status(401).json('user not found - please try again');
