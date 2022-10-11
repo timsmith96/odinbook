@@ -13,14 +13,17 @@ export default function Feed() {
   const [image, setImage] = useState();
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [posts, setPosts] = useState();
   const navigate = useNavigate();
 
   document.title = 'Odinbook';
 
   useEffect(() => {
     getUser();
+    getPosts();
   }, []);
 
+  // making a GET request to get the user and storing in state
   const getUser = async () => {
     const res = await fetch('http://localhost:3000/userplease', {
       method: 'GET',
@@ -30,9 +33,24 @@ export default function Feed() {
         'Content-Type': 'application/json',
       },
     });
+    console.log(res);
     const json = await res.json();
     const user = json.user;
     setUser(user);
+  };
+
+  // making GET request to /posts to get all the posts
+  const getPosts = async () => {
+    const res = await fetch('http://localhost:3000/posts', {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await res.json();
+    setPosts(json);
     setIsLoading(false);
   };
 
@@ -43,7 +61,7 @@ export default function Feed() {
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
-    console.log(image);
+    console.log(e.target.files[0]);
   };
 
   const handleModalChange = () => {
@@ -54,6 +72,7 @@ export default function Feed() {
     setShowModal(!showModal);
   };
 
+  // making POST request to /posts to create a new post
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -63,15 +82,13 @@ export default function Feed() {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
-      headers: {
-        // 'Content-Type': 'multipart/form-data',
-        // 'Content-Type': 'application/json',
-      },
       body: formData,
     });
-    // const json = await res.json();
+    const json = await res.json();
     if (res.status === 403) {
       navigate('/');
+    } else {
+      console.log(json);
     }
   };
 
@@ -79,18 +96,29 @@ export default function Feed() {
     return <h1>Loading...</h1>;
   }
 
-  if (!user) {
-    return <h1>You have been logged out - please log in to continue</h1>;
-  }
-
   return (
     <div className={styles.feed}>
       <div className={`${showModal ? styles.opacity : ''}`}>
         <Navbar />
         <Newpost onModalClick={handleModalChange} user={user} />
-        <Post />
+        {/* creating our posts */}
+        {posts.map((post) => (
+          <Post
+            key={post._id}
+            imageUrl={post.imageUrl}
+            firstName={post.user.firstName}
+            surname={post.user.surname}
+            text={post.text}
+            dateCreated={post.createdAt}
+            likes={post.likes}
+            id={post._id}
+            user={user}
+          />
+        ))}
+        {/* <Post /> */}
       </div>
       <CreatePost
+        user={user}
         onSubmit={handleSubmit}
         textEntered={textEntered}
         onInputChange={handleInputChange}

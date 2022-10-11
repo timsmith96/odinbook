@@ -21,16 +21,6 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// const verifyToken = (req, res, next) => {
-//   const bearerToken = req.headers['authorization'];
-//   if (typeof bearerToken !== 'undefined') {
-//     req.token = bearerToken;
-//     next();
-//   } else {
-//     res.sendStatus(403);
-//   }
-// };
-
 app.use(cors({ credentials: true, origin: 'http://localhost:3001' }));
 
 app.use(bodyParser.json());

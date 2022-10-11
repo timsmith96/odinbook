@@ -1,5 +1,6 @@
 import styles from './Navbar.module.css';
-import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { BrowserRouter, Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ReactComponent as Hamburger } from '../assets/icons/navbar/hamburger.svg';
 import { ReactComponent as Home } from '../assets/icons/navbar/home.svg';
@@ -12,8 +13,12 @@ import { ReactComponent as Logout } from '../assets/icons/navbar/logout.svg';
 export default function Navbar() {
   const [dropdown, setDropdown] = useState(false);
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     setDropdown(!dropdown);
+  };
+
+  const handleLogout = () => {
+    Cookies.remove('token');
   };
 
   return (
@@ -63,7 +68,12 @@ export default function Navbar() {
           </div>
           <p>Profile</p>
         </Link>
-        <Link className={styles.container} id={styles.log_out}>
+        <Link
+          className={styles.container}
+          id={styles.log_out}
+          to="/"
+          onClick={handleLogout}
+        >
           <div className={styles.icon_container}>
             <Logout />
           </div>

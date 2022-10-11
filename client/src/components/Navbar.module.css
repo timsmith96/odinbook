@@ -59,11 +59,8 @@ a {
   background-color: #e4e6e9;
 }
 
-@media (min-width: 524px) {
+@media (min-width: 591px) {
   #hamburger_icon {
-    display: none;
-  }
-  #log_out {
     display: none;
   }
   .nav {
