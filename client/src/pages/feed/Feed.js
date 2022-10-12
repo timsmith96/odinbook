@@ -33,7 +33,6 @@ export default function Feed() {
         'Content-Type': 'application/json',
       },
     });
-    console.log(res);
     const json = await res.json();
     const user = json.user;
     setUser(user);
@@ -61,7 +60,6 @@ export default function Feed() {
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
-    console.log(e.target.files[0]);
   };
 
   const handleModalChange = () => {
@@ -113,6 +111,7 @@ export default function Feed() {
             likes={post.likes}
             id={post._id}
             user={user}
+            comments={post.comments}
           />
         ))}
         {/* <Post /> */}

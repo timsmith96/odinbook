@@ -64,6 +64,7 @@
   align-items: center;
   gap: 10px;
   color: #65676b;
+  position: relative;
 }
 
 .likes_icon_container {
@@ -130,4 +131,20 @@
 
 .liked {
   color: #166fe5;
+}
+
+.likes_hover {
+  position: absolute;
+  bottom: -40px;
+  background-color: #3c3c3c;
+  opacity: 0.8;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  width: 150px;
+  cursor: default;
+}
+
+.hide {
+  display: none;
 }

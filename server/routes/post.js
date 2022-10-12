@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
+const Comment = require('../models/comment');
 const { body } = require('express-validator');
 const jwtAuth = require('../middleware/auth');
 const upload = require('../middleware/multer');
@@ -83,7 +84,7 @@ router.post(
 // GET request to /posts to get all the posts and handle images as well
 router.get('/', async (req, res) => {
   // get all the posts
-  const posts = await Post.find({}).populate('user');
+  const posts = await Post.find({}).populate('user').populate('likes');
   // loop through posts and add s3 url to each post
   for (const post of posts) {
     const getObjectParams = {
@@ -100,7 +101,23 @@ router.get('/', async (req, res) => {
 // PATCH request to /post/:id for a user to like a post
 router.patch('/:id', jwtAuth, async (req, res) => {
   const post = await Post.findOne({ _id: req.params.id }).populate('likes');
-  // if the post is already liked
+  if (req.headers.comments === 'true') {
+    const comment = new Comment({
+      user: req.user.user._id,
+      text: req.body.text,
+    });
+    await comment.save();
+    post.comments.push(comment);
+    console.log(post);
+    await post.save();
+    // this populates both the comments and the users within comments on a post
+    const toSend = await Post.findOne({ _id: req.params.id }).populate(
+      'comments'
+    );
+    await toSend.populate('comments.user');
+    return res.json(toSend.comments);
+  }
+  // if the post is already liked - sending this from state in react
   if (req.headers.liked === 'true') {
     console.log('post already liked - unliking');
     // removing the user from the post's array of likes
