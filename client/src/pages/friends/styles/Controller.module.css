@@ -1,0 +1,15 @@
+.controller {
+  background-color: #f0f2f5;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 600px) {
+  .content {
+    display: flex;
+    flex-direction: row;
+  }
+}

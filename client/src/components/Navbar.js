@@ -36,13 +36,13 @@ export default function Navbar() {
         </Link>
       </ul>
       <ul className={`${styles.nav_center} ${dropdown ? styles.show : ''}`}>
-        <Link className={styles.container}>
+        <Link className={styles.container} to="/feed">
           <div className={styles.icon_container}>
             <Home className={styles.selected} />
           </div>
           <p>Home</p>
         </Link>
-        <Link className={styles.container}>
+        <Link className={styles.container} to="/friends">
           <div className={styles.icon_container}>
             <Friends />
           </div>

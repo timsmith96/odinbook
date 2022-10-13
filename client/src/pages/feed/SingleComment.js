@@ -1,6 +1,7 @@
 import styles from './SingleComment.module.css';
+import { DateTime } from 'luxon';
 
-export default function SingleComment({ imageUrl }) {
+export default function SingleComment({ user, text, imageUrl, createdAt }) {
   return (
     <li className={styles.single_comment}>
       <div
@@ -10,12 +11,14 @@ export default function SingleComment({ imageUrl }) {
         }}
       ></div>
       <div className={styles.comment_text_container}>
-        <p className={styles.user_name}>Tim Smith</p>
-        <p className={styles.comment_text}>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veniam
-          commodi, ipsum et rem ratione nihil.
-        </p>
+        <p
+          className={styles.user_name}
+        >{`${user.firstName} ${user.surname}`}</p>
+        <p className={styles.comment_text}>{text}</p>
       </div>
+      <p className={styles.created_at}>
+        {DateTime.fromISO(createdAt).toLocaleString()}
+      </p>
     </li>
   );
 }

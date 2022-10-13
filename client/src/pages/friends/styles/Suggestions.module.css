@@ -1,0 +1,76 @@
+.suggestions {
+  width: 100%;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.title {
+  padding-bottom: 10px;
+}
+
+.list_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.list_item:hover {
+  background-color: #f0f2f5;
+  border-radius: 10px;
+}
+
+.user_icon_container {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.suggestion_name_text {
+  font-weight: 500;
+}
+
+.add_btn {
+  background-color: #1a6ed8;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.add_btn:hover {
+  background-color: #124d97;
+}
+
+@media (min-width: 600px) {
+  .suggestions {
+    width: 100%;
+    background-color: #f0f2f5;
+  }
+  .user_icon_container {
+    height: 200px;
+    width: 200px;
+    border-radius: 0;
+  }
+  .suggestions_list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .list_item {
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+  .list_item:hover {
+    background-color: #fff;
+  }
+}

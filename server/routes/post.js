@@ -84,9 +84,15 @@ router.post(
 // GET request to /posts to get all the posts and handle images as well
 router.get('/', async (req, res) => {
   // get all the posts
-  const posts = await Post.find({}).populate('user').populate('likes');
+  const posts = await Post.find({})
+    // initial populating, can't populate user within comments here, have to do it after this call it seems
+    .populate('user')
+    .populate('likes')
+    .populate('comments');
   // loop through posts and add s3 url to each post
   for (const post of posts) {
+    // so we do it here
+    await post.populate('comments.user');
     const getObjectParams = {
       Bucket: bucketName,
       Key: post.imageName,
@@ -98,9 +104,10 @@ router.get('/', async (req, res) => {
   return res.json(posts);
 });
 
-// PATCH request to /post/:id for a user to like a post
+// PATCH request to /post/:id for a user to like a post or add a new comment, depending on which headers the client sends with the request
 router.patch('/:id', jwtAuth, async (req, res) => {
   const post = await Post.findOne({ _id: req.params.id }).populate('likes');
+  // if the request wants to add a comment
   if (req.headers.comments === 'true') {
     const comment = new Comment({
       user: req.user.user._id,
@@ -108,12 +115,12 @@ router.patch('/:id', jwtAuth, async (req, res) => {
     });
     await comment.save();
     post.comments.push(comment);
-    console.log(post);
     await post.save();
     // this populates both the comments and the users within comments on a post
-    const toSend = await Post.findOne({ _id: req.params.id }).populate(
-      'comments'
-    );
+    const toSend = await Post.findOne({ _id: req.params.id }).populate({
+      path: 'comments',
+      options: { sort: { createdAt: -1 } },
+    });
     await toSend.populate('comments.user');
     return res.json(toSend.comments);
   }

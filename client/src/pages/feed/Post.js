@@ -48,7 +48,6 @@ export default function Post({
   };
 
   const handleLikesHover = () => {
-    console.log(comments);
     updatedLikes.length > 0 ? setDisplayLikes(true) : setDisplayLikes(false);
   };
 
@@ -62,7 +61,6 @@ export default function Post({
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    console.log('form submitted');
     setCommentInput('');
     const res = await fetch(`http://localhost:3000/posts/${id}`, {
       method: 'PATCH',
@@ -75,7 +73,7 @@ export default function Post({
       body: JSON.stringify({ text: commentInput }),
     });
     const json = await res.json();
-    console.log(json);
+    setUpdatedComments(json);
   };
 
   return (
@@ -120,7 +118,7 @@ export default function Post({
           className={styles.comments_counter}
           onClick={() => setDisplayComments(!displayComments)}
         >
-          2 comments
+          {`${updatedComments.length} comments`}
         </p>
       </div>
       <div className={styles.upper_hr}></div>
@@ -149,6 +147,7 @@ export default function Post({
         onCommentTextChange={handleCommentTextChange}
         onSubmit={handleCommentSubmit}
         commentInput={commentInput}
+        comments={updatedComments}
       />
     </div>
   );

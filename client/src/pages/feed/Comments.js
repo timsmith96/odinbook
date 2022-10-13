@@ -1,4 +1,5 @@
 import styles from './Comments.module.css';
+import SingleComment from './SingleComment';
 // import SingleComment from './SingleComment';
 
 export default function Comments({
@@ -7,6 +8,7 @@ export default function Comments({
   onCommentTextChange,
   onSubmit,
   commentInput,
+  comments,
 }) {
   return (
     <div className={`${display ? styles.comments_container : styles.hide}`}>
@@ -33,7 +35,19 @@ export default function Comments({
           </button>
         </form>
       </div>
-      <div className={styles.comments}>{/* map over comments here  */}</div>
+      <div className={styles.comments}>
+        {comments.map((comment) => {
+          return (
+            <SingleComment
+              user={comment.user}
+              text={comment.text}
+              createdAt={comment.createdAt}
+              // this is the image url from the post, ultimately need to change this to the user's image url (avatar)
+              imageUrl={imageUrl}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
