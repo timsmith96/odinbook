@@ -1,4 +1,4 @@
-import styles from './SingleComment.module.css';
+import styles from '../styles/SingleComment.module.css';
 import { DateTime } from 'luxon';
 
 export default function SingleComment({ user, text, imageUrl, createdAt }) {

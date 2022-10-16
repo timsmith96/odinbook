@@ -1,6 +1,4 @@
 .nav {
-  width: 100%;
-  max-width: 600px;
   background-color: #fff;
   padding: 10px 10px;
 }
@@ -43,4 +41,10 @@
 
 .selected {
   background-color: #f0f2f5;
+}
+
+@media (min-width: 600px) {
+  .nav {
+    flex: 0 0 360px;
+  }
 }

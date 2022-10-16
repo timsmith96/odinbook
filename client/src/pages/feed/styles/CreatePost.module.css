@@ -169,3 +169,11 @@
 .hide {
   display: none;
 }
+
+.upload_success,
+.upload_remove {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}

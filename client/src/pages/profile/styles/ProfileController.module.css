@@ -1,0 +1,70 @@
+.profile_controller {
+  max-width: 1250px;
+  width: 90%;
+  border: 1px solid green;
+  margin: 0 auto;
+}
+
+.header {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.profile_upload_container {
+  padding-bottom: 20px;
+}
+
+.user_name {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.user_friends {
+  color: #65676b;
+  font-size: 18px;
+}
+
+.file_input_label {
+  margin: 0 auto;
+  width: 170px;
+  height: 170px;
+  display: block;
+  border-radius: 50%;
+  position: relative;
+  background-color: #c9cbcd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file_input {
+  display: none;
+}
+
+.camera_icon_container {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 15px;
+  right: 0;
+  background-color: #d8dadf;
+}
+
+.file_input_label:hover,
+.camera_icon_container:hover {
+  background-color: #bfc2c6;
+  cursor: pointer;
+}
+
+.hr {
+  border-bottom: 1px solid #65676b;
+  margin: 20px 0;
+}
+
+.user_info_container {
+  background-color: #f0f2f5;
+}

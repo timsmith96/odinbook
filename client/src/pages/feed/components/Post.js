@@ -1,9 +1,9 @@
-import styles from './Post.module.css';
+import styles from '../styles/Post.module.css';
 import Comments from './Comments';
-import { ReactComponent as Likes } from '../../assets/icons/post/likes.svg';
-import { ReactComponent as Like } from '../../assets/icons/post/like.svg';
-import { ReactComponent as Unlike } from '../../assets/icons/post/unlike.svg';
-import { ReactComponent as Comment } from '../../assets/icons/post/comment.svg';
+import { ReactComponent as Likes } from '../../../assets/icons/post/likes.svg';
+import { ReactComponent as Like } from '../../../assets/icons/post/like.svg';
+import { ReactComponent as Unlike } from '../../../assets/icons/post/unlike.svg';
+import { ReactComponent as Comment } from '../../../assets/icons/post/comment.svg';
 import { useState } from 'react';
 const { DateTime } = require('luxon');
 
@@ -96,7 +96,7 @@ export default function Post({
         <p className={styles.post_text}>{text}</p>
       </div>
       <div className={styles.post_img_container}>
-        <img className={styles.post_img} src={imageUrl} alt="elephant" />
+        {imageUrl && <img className={styles.post_img} src={imageUrl} alt="" />}
       </div>
       <div className={styles.post_info_container}>
         <div

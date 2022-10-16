@@ -1,13 +1,14 @@
-import styles from './Newpost.module.css';
-import { ReactComponent as User } from '../../assets/icons/navbar/user.svg';
-import { ReactComponent as Photo } from '../../assets/icons/photoIcon.svg';
+import styles from '../styles/Newpost.module.css';
+import { ReactComponent as User } from '../../../assets/icons/navbar/user.svg';
+import { ReactComponent as Photo } from '../../../assets/icons/photoIcon.svg';
 
 export default function Newpost({ onModalClick, user }) {
   return (
     <div className={styles.new_post}>
       <div className={styles.upper_row}>
         <div className={styles.icon_container}>
-          <User className={styles.user_icon} />
+          <img src={user.imageUrl} alt="" />
+          {/* <User className={styles.user_icon} /> */}
         </div>
         <input
           className={styles.post_text_input}

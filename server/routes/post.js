@@ -91,15 +91,17 @@ router.get('/', async (req, res) => {
     .populate('comments');
   // loop through posts and add s3 url to each post
   for (const post of posts) {
-    // so we do it here
-    await post.populate('comments.user');
-    const getObjectParams = {
-      Bucket: bucketName,
-      Key: post.imageName,
-    };
-    const command = new GetObjectCommand(getObjectParams);
-    const url = await getSignedUrl(s3, command);
-    post.imageUrl = url;
+    if (post.imageName !== undefined) {
+      // so we do it here
+      await post.populate('comments.user');
+      const getObjectParams = {
+        Bucket: bucketName,
+        Key: post.imageName,
+      };
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(s3, command);
+      post.imageUrl = url;
+    }
   }
   return res.json(posts);
 });

@@ -1,4 +1,4 @@
-import styles from './styles/Requests.module.css';
+import styles from '../styles/Requests.module.css';
 
 export default function Requests() {
   return (

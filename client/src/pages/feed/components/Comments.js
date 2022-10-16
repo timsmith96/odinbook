@@ -1,6 +1,5 @@
-import styles from './Comments.module.css';
+import styles from '../styles/Comments.module.css';
 import SingleComment from './SingleComment';
-// import SingleComment from './SingleComment';
 
 export default function Comments({
   imageUrl,
@@ -42,6 +41,7 @@ export default function Comments({
               user={comment.user}
               text={comment.text}
               createdAt={comment.createdAt}
+              key={comment._id}
               // this is the image url from the post, ultimately need to change this to the user's image url (avatar)
               imageUrl={imageUrl}
             />

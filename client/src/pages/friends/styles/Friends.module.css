@@ -46,7 +46,6 @@
 
 @media (min-width: 600px) {
   .suggestions {
-    width: 100%;
     background-color: #f0f2f5;
   }
   .user_icon_container {

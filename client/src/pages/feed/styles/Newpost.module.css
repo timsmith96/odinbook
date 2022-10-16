@@ -10,6 +10,10 @@
   padding: 15px 20px;
 }
 
+img {
+  width: 100%;
+}
+
 .upper_row {
   display: flex;
   gap: 10px;

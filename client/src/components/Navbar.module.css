@@ -49,6 +49,7 @@
   gap: 20px;
   padding: 5px;
   border-radius: 10px;
+  position: relative;
 }
 
 a {
@@ -58,6 +59,23 @@ a {
 
 .container:hover {
   background-color: #e4e6e9;
+}
+
+.selected p {
+  color: #1877f2;
+}
+
+.selected::after {
+  content: '';
+  width: 60px;
+  bottom: -11px;
+  left: 15px;
+  position: absolute;
+  border-bottom: none;
+}
+
+.selected path {
+  fill: #1877f2;
 }
 
 @media (min-width: 591px) {
@@ -104,55 +122,12 @@ a {
   .nav_right .container:hover {
     background-color: #cbd5e1;
   }
+  .selected::after {
+    content: '';
+    width: 60px;
+    bottom: -11px;
+    left: 15px;
+    position: absolute;
+    border-bottom: 3px solid #1877f2;
+  }
 }
-
-/* svg {
-  display: none;
-} */
-
-/* .nav_left {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-#facebook_icon {
-  width: 50px;
-  height: 50px;
-}
-
-#user {
-  background-color: #94a3b8;
-}
-
-.nav_center {
-  gap: 80px;
-  display: flex;
-  align-items: center;
-
-  height: 100%;
-}
-
-.nav_right {
-  display: flex;
-  gap: 10px;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  background-color: #e2e8f0;
-}
-
-.selected {
-  padding-bottom: 10px;
-  border-bottom: 3px solid #1b74e4;
-}
-
-.selected path {
-  fill: #1b74e4;
-} */

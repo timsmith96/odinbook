@@ -1,42 +1,28 @@
-import Navbar from '../../components/Navbar';
 import Newpost from './Newpost';
 import CreatePost from './CreatePost';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Post from './Post';
-import styles from './Feed.module.css';
+import styles from '../styles/Feed.module.css';
+import { UserContext } from '../../../context/UserContext';
 
 export default function Feed() {
   const [showModal, setShowModal] = useState(false);
   const [post, setPost] = useState();
   const [textEntered, setTextEntered] = useState(false);
   const [image, setImage] = useState();
-  const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState();
   const navigate = useNavigate();
+  const user = useContext(UserContext);
+
+  console.log(user);
 
   document.title = 'Odinbook';
 
   useEffect(() => {
-    getUser();
     getPosts();
   }, []);
-
-  // making a GET request to get the user and storing in state
-  const getUser = async () => {
-    const res = await fetch('http://localhost:3000/userplease', {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    const user = json.user;
-    setUser(user);
-  };
 
   // making GET request to /posts to get all the posts
   const getPosts = async () => {
@@ -70,6 +56,10 @@ export default function Feed() {
     setShowModal(!showModal);
   };
 
+  const handleRemoveImage = () => {
+    setImage();
+  };
+
   // making POST request to /posts to create a new post
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,7 +76,7 @@ export default function Feed() {
     if (res.status === 403) {
       navigate('/');
     } else {
-      console.log(json);
+      window.location.reload();
     }
   };
 
@@ -97,7 +87,6 @@ export default function Feed() {
   return (
     <div className={styles.feed}>
       <div className={`${showModal ? styles.opacity : ''}`}>
-        <Navbar />
         <Newpost onModalClick={handleModalChange} user={user} />
         {/* creating our posts */}
         {posts.map((post) => (
@@ -124,6 +113,8 @@ export default function Feed() {
         onImageChange={handleImageChange}
         display={showModal}
         onCloseClick={handleCloseClick}
+        image={image}
+        onRemoveImage={handleRemoveImage}
       />
     </div>
   );

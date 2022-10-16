@@ -1,4 +1,4 @@
-import styles from './styles/Suggestions.module.css';
+import styles from '../styles/Suggestions.module.css';
 
 export default function Suggestions() {
   return (

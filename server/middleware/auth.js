@@ -8,6 +8,7 @@ const cookieJwtAuth = (req, res, next) => {
     // verifying the user's token and giving back user (packed up initially) if success
     const user = jwt.verify(token, process.env.JWT_KEY);
     console.log('token validation successful');
+    console.log(user);
     // adding user from the jwt verify to the request object so can be used in the route (this function is middleware)
     req.user = user;
     next();

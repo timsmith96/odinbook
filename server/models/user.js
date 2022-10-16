@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema(
     likedPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     password: { type: String, required: true },
     passwordReadable: { type: String, required: false },
+    profileImageName: { type: String, required: false },
+    imageUrl: { type: String, required: false },
   },
   { timestamps: true }
 );

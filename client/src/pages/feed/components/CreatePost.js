@@ -1,7 +1,9 @@
-import styles from './CreatePost.module.css';
-import { ReactComponent as User } from '../../assets/icons/navbar/user.svg';
-import { ReactComponent as Photo } from '../../assets/icons/photoIcon.svg';
-import { ReactComponent as Close } from '../../assets/icons/closeIcon.svg';
+import styles from '../styles/CreatePost.module.css';
+import { ReactComponent as User } from '../../../assets/icons/navbar/user.svg';
+import { ReactComponent as Photo } from '../../../assets/icons/photoIcon.svg';
+import { ReactComponent as Close } from '../../../assets/icons/closeIcon.svg';
+import { ReactComponent as Success } from '../../../assets/icons/post/success.svg';
+import { ReactComponent as Remove } from '../../../assets/icons/post/remove.svg';
 
 export default function CreatePost({
   onSubmit,
@@ -10,6 +12,7 @@ export default function CreatePost({
   onImageChange,
   display,
   onCloseClick,
+  image,
 }) {
   return (
     <div className={`${styles.create_post} ${display ? '' : styles.hide}`}>
@@ -33,7 +36,7 @@ export default function CreatePost({
           placeholder="What's on your mind, Tim?"
         ></textarea>
         <div className={styles.add_to_post}>
-          <p className={styles.add_to_post_text}>Add to your post</p>
+          <p className={styles.add_to_post_text}>Add to post</p>
           <label htmlFor="file-upload" className={styles.file_input_label}>
             <Photo className={styles.photo_icon} />
           </label>
@@ -43,6 +46,14 @@ export default function CreatePost({
             onChange={onImageChange}
             className={styles.file_input}
           />
+          {image && (
+            <div className={styles.upload_status}>
+              <div className={styles.upload_success}>
+                <Success />
+                <p>uploaded</p>
+              </div>
+            </div>
+          )}
         </div>
         <button
           className={`${

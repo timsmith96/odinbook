@@ -1,8 +1,8 @@
-import styles from './styles/Nav.module.css';
-import { ReactComponent as Friends } from '../../assets/icons/friends/friends.svg';
-import { ReactComponent as Arrow } from '../../assets/icons/friends/arrow.svg';
-import { ReactComponent as Requests } from '../../assets/icons/friends/requests.svg';
-import { ReactComponent as Suggestions } from '../../assets/icons/friends/suggestions.svg';
+import styles from '../styles/Nav.module.css';
+import { ReactComponent as Friends } from '../../../assets/icons/friends/friends.svg';
+import { ReactComponent as Arrow } from '../../../assets/icons/friends/arrow.svg';
+import { ReactComponent as Requests } from '../../../assets/icons/friends/requests.svg';
+import { ReactComponent as Suggestions } from '../../../assets/icons/friends/suggestions.svg';
 
 export default function Nav({ onClick, selected }) {
   return (

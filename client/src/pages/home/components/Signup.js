@@ -1,5 +1,5 @@
-import styles from './Signup.module.css';
-import { ReactComponent as CloseSvg } from '../../assets/icons/closeIcon.svg';
+import styles from '../styles/Signup.module.css';
+import { ReactComponent as CloseSvg } from '../../../assets/icons/closeIcon.svg';
 
 export default function Signup({
   onCloseClick,
