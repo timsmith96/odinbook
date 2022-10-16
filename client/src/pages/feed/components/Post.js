@@ -17,6 +17,7 @@ export default function Post({
   id,
   user,
   comments,
+  avatarUrl,
 }) {
   // get likes from the API call in feed, then new likes varible to likes
   const [updatedLikes, setUpdatedLikes] = useState(likes);
@@ -82,7 +83,7 @@ export default function Post({
         <div
           className={styles.user_icon_container}
           style={{
-            backgroundImage: `url(${imageUrl})`,
+            backgroundImage: `url(${avatarUrl})`,
           }}
         ></div>
         <div className={styles.user_info_container}>
@@ -148,6 +149,7 @@ export default function Post({
         onSubmit={handleCommentSubmit}
         commentInput={commentInput}
         comments={updatedComments}
+        user={user}
       />
     </div>
   );

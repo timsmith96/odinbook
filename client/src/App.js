@@ -16,6 +16,7 @@ function App() {
   const [signInError, setSignInError] = useState();
   const navigate = useNavigate();
 
+  // runs only on inital render, and gets the current user (from cookies in the browser) and sets this as state. Once we have done this the inital time, any further changes to user (like changing profile pic) are done through setState of the user, using the json response from the server
   useEffect(() => {
     if (!user) {
       getUser();
@@ -37,7 +38,6 @@ function App() {
       setSignInError(json);
       // if the log in is successful, the server gives us the user object which we are then storing in state here, (top level component) and then we use context to make it available to the components which need it
     } else {
-      console.log('i have the user, will set it now');
       setUser(json);
     }
   };
@@ -69,7 +69,6 @@ function App() {
       setSignInError(json);
       // if the log in is successful, the server gives us the user object which we are then storing in state here, (top level component) and then we use context to make it available to the components which need it
     } else {
-      console.log('log in successful, setting user');
       setUser(json);
       navigate('/feed');
     }

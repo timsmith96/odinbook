@@ -91,9 +91,9 @@ router.get('/', async (req, res) => {
     .populate('comments');
   // loop through posts and add s3 url to each post
   for (const post of posts) {
+    await post.populate('comments.user');
     if (post.imageName !== undefined) {
       // so we do it here
-      await post.populate('comments.user');
       const getObjectParams = {
         Bucket: bucketName,
         Key: post.imageName,

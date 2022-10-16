@@ -15,7 +15,6 @@ router.post('/', (req, res) => {
       if (data) {
         const token = jwt.sign({ user }, process.env.JWT_KEY);
         res.cookie('token', token);
-        console.log(user);
         return res.json(user);
       } else {
         // passwords don't match

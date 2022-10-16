@@ -13,6 +13,7 @@ export default function CreatePost({
   display,
   onCloseClick,
   image,
+  user,
 }) {
   return (
     <div className={`${styles.create_post} ${display ? '' : styles.hide}`}>
@@ -26,14 +27,16 @@ export default function CreatePost({
         <div className={styles.user_icon_container}>
           <User className={styles.user_icon} />
         </div>
-        <p className={styles.user_name}>Tim Smith</p>
+        <p
+          className={styles.user_name}
+        >{`${user.firstName} ${user.surname}`}</p>
       </div>
       <form className={styles.create_post_form} onSubmit={onSubmit}>
         <textarea
           onChange={onInputChange}
           className={styles.text_input}
           rows="4"
-          placeholder="What's on your mind, Tim?"
+          placeholder={`What's on your mind, ${user.firstName}?`}
         ></textarea>
         <div className={styles.add_to_post}>
           <p className={styles.add_to_post_text}>Add to post</p>

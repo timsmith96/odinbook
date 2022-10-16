@@ -2,12 +2,12 @@ import styles from '../styles/Comments.module.css';
 import SingleComment from './SingleComment';
 
 export default function Comments({
-  imageUrl,
   display,
   onCommentTextChange,
   onSubmit,
   commentInput,
   comments,
+  user,
 }) {
   return (
     <div className={`${display ? styles.comments_container : styles.hide}`}>
@@ -15,7 +15,7 @@ export default function Comments({
         <div
           className={styles.user_icon_container}
           style={{
-            backgroundImage: `url(${imageUrl})`,
+            backgroundImage: `url(${user.imageUrl})`,
           }}
         ></div>
         <form className={styles.create_comment_form} onSubmit={onSubmit}>
@@ -42,8 +42,7 @@ export default function Comments({
               text={comment.text}
               createdAt={comment.createdAt}
               key={comment._id}
-              // this is the image url from the post, ultimately need to change this to the user's image url (avatar)
-              imageUrl={imageUrl}
+              commentProfileImage={comment.user.imageUrl}
             />
           );
         })}

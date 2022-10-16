@@ -1,13 +1,19 @@
 import styles from '../styles/SingleComment.module.css';
 import { DateTime } from 'luxon';
 
-export default function SingleComment({ user, text, imageUrl, createdAt }) {
+export default function SingleComment({
+  user,
+  text,
+  imageUrl,
+  createdAt,
+  commentProfileImage,
+}) {
   return (
     <li className={styles.single_comment}>
       <div
         className={styles.comment_user_icon_container}
         style={{
-          backgroundImage: `url(${imageUrl})`,
+          backgroundImage: `url(${commentProfileImage})`,
         }}
       ></div>
       <div className={styles.comment_text_container}>

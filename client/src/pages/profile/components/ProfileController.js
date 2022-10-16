@@ -24,7 +24,6 @@ export default function Controller({ onUserChange }) {
       });
       // hopefully this updates the user object in context stored in state in app.js
       const json = await res.json();
-      console.log(json);
       onUserChange(json);
     }
     submitImage();
@@ -48,7 +47,9 @@ export default function Controller({ onUserChange }) {
           />
         </div>
         <div className={styles.user_info}>
-          <h2 className={styles.user_name}>Tim Smith</h2>
+          <h2 className={styles.user_name}>
+            {`${user.firstName} ${user.surname}`}
+          </h2>
           <p className={styles.user_friends}>3 friends</p>
         </div>
       </div>

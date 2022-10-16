@@ -16,8 +16,6 @@ export default function Feed() {
   const navigate = useNavigate();
   const user = useContext(UserContext);
 
-  console.log(user);
-
   document.title = 'Odinbook';
 
   useEffect(() => {
@@ -99,6 +97,7 @@ export default function Feed() {
             dateCreated={post.createdAt}
             likes={post.likes}
             id={post._id}
+            avatarUrl={post.user.imageUrl}
             user={user}
             comments={post.comments}
           />
