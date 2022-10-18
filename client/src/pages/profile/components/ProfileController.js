@@ -9,6 +9,8 @@ export default function Controller({ onUserChange }) {
   const [image, setImage] = useState();
   const user = useContext(UserContext);
 
+  console.log(user);
+
   useEffect(() => {
     async function submitImage() {
       if (!image) {
@@ -29,34 +31,44 @@ export default function Controller({ onUserChange }) {
     submitImage();
   }, [image, user._id, onUserChange]);
 
-  return (
-    <div className={styles.profile_controller}>
-      <div className={styles.header}>
-        <div className={styles.profile_upload_container}>
-          <label htmlFor="file-upload" className={styles.file_input_label}>
-            <div className={styles.camera_icon_container}>
-              <Camera />
-            </div>
-            <Profile />
-          </label>
-          <input
-            type="file"
-            id="file-upload"
-            onChange={(e) => setImage(e.target.files[0])}
-            className={styles.file_input}
-          />
+  if (user) {
+    return (
+      <div className={styles.profile_controller}>
+        <div className={styles.header}>
+          <div className={styles.profile_upload_container}>
+            <label
+              htmlFor="file-upload"
+              className={styles.file_input_label}
+              style={{
+                backgroundImage: `url(${user.imageUrl})`,
+              }}
+            >
+              <div className={styles.camera_icon_container}>
+                <Camera />
+              </div>
+              {!user.imageUrl && <Profile />}
+            </label>
+            <input
+              type="file"
+              id="file-upload"
+              onChange={(e) => setImage(e.target.files[0])}
+              className={styles.file_input}
+            />
+          </div>
+          <div className={styles.user_info}>
+            <h2 className={styles.user_name}>
+              {`${user.firstName} ${user.surname}`}
+            </h2>
+            <p className={styles.user_friends}>{user.friends.length} friends</p>
+          </div>
         </div>
-        <div className={styles.user_info}>
-          <h2 className={styles.user_name}>
-            {`${user.firstName} ${user.surname}`}
-          </h2>
-          <p className={styles.user_friends}>3 friends</p>
+        <div className={styles.hr}></div>
+        <div className={styles.user_info_container}>
+          <Friends />
         </div>
       </div>
-      <div className={styles.hr}></div>
-      <div className={styles.user_info_container}>
-        <Friends />
-      </div>
-    </div>
-  );
+    );
+  } else {
+    return <h1>no user</h1>;
+  }
 }

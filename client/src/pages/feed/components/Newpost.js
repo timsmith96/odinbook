@@ -3,12 +3,17 @@ import { ReactComponent as User } from '../../../assets/icons/navbar/user.svg';
 import { ReactComponent as Photo } from '../../../assets/icons/photoIcon.svg';
 
 export default function Newpost({ onModalClick, user }) {
+  console.log(user.imageUrl);
   return (
     <div className={styles.new_post}>
       <div className={styles.upper_row}>
-        <div className={styles.icon_container}>
-          <img src={user.imageUrl} alt="" />
-          {/* <User className={styles.user_icon} /> */}
+        <div
+          className={styles.icon_container}
+          style={{
+            backgroundImage: `url(${user.imageUrl})`,
+          }}
+        >
+          {!user.imageUrl && <User className={styles.user_icon} />}
         </div>
         <input
           className={styles.post_text_input}

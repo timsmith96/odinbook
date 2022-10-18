@@ -11,20 +11,23 @@ import ProfileController from './pages/profile/components/ProfileController';
 function App() {
   const [selected, setSelected] = useState('home');
   const [user, setUser] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [signInError, setSignInError] = useState();
   const navigate = useNavigate();
 
   // runs only on inital render, and gets the current user (from cookies in the browser) and sets this as state. Once we have done this the inital time, any further changes to user (like changing profile pic) are done through setState of the user, using the json response from the server
-  useEffect(() => {
-    if (!user) {
-      getUser();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!user) {
+  //     getUser();
+  //     setIsLoading(false);
+  //   }
+  // });
 
   // get user
   const getUser = async () => {
+    console.log('attempting to get user');
     const res = await fetch('http://localhost:3000/userplease', {
       method: 'GET',
       mode: 'cors',
@@ -37,8 +40,11 @@ function App() {
     if (res.status === 401) {
       setSignInError(json);
       // if the log in is successful, the server gives us the user object which we are then storing in state here, (top level component) and then we use context to make it available to the components which need it
+      console.log('error getting user');
     } else {
       setUser(json);
+      setIsLoading(false);
+      console.log('got the user');
     }
   };
 
@@ -69,6 +75,7 @@ function App() {
       setSignInError(json);
       // if the log in is successful, the server gives us the user object which we are then storing in state here, (top level component) and then we use context to make it available to the components which need it
     } else {
+      console.log('log in success');
       setUser(json);
       navigate('/feed');
     }
@@ -77,6 +84,12 @@ function App() {
   const handleClick = (e) => {
     setSelected(e.currentTarget.dataset.name);
   };
+
+  console.log('app refresehd');
+
+  if (isLoading) {
+    return <h1>loading</h1>;
+  }
 
   return (
     <UserContext.Provider value={user}>

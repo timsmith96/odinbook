@@ -32,8 +32,9 @@ const s3 = new S3Client({
   region: bucketRegion,
 });
 
-router.get('/', (req, res) => {
-  res.send('user route');
+router.get('/', jwtAuth, async (req, res) => {
+  const users = await User.find({});
+  res.json(users);
 });
 
 const titleCase = (str) => {
@@ -119,6 +120,16 @@ router.patch('/:id', jwtAuth, upload.single('image'), (req, res) => {
           });
       });
   });
+});
+
+// PATCH request to /users/addFriend/:id to add the requesting user onto the requested user's list of friends
+router.patch('/addFriend/:id', jwtAuth, async (req, res) => {
+  console.log(req.user);
+  const requestingUser = await User.findOne({ _id: req.user.user._id });
+  const requestedUser = await User.findOne({ _id: req.params.id });
+  requestedUser.friendRequests.push(requestingUser);
+  requestedUser.save();
+  res.send(requestedUser);
 });
 
 module.exports = router;

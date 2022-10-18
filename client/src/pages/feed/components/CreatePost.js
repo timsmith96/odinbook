@@ -24,8 +24,13 @@ export default function CreatePost({
         </div>
       </div>
       <div className={styles.upper_row}>
-        <div className={styles.user_icon_container}>
-          <User className={styles.user_icon} />
+        <div
+          className={styles.user_icon_container}
+          style={{
+            backgroundImage: `url(${user.imageUrl})`,
+          }}
+        >
+          {!user.imageUrl && <User className={styles.user_icon} />}
         </div>
         <p
           className={styles.user_name}

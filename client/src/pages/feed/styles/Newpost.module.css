@@ -27,6 +27,9 @@ img {
   justify-content: center;
   align-items: center;
   background-color: #bfc2c6;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .user_icon path {

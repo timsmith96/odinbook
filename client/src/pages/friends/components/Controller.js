@@ -4,10 +4,12 @@ import Requests from './Requests';
 import Friends from './Friends';
 import Nav from './Nav';
 import styles from '../styles/Controller.module.css';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from '../../../context/UserContext';
 
 export default function Controller({ selected, onClick }) {
   const [display, setDisplay] = useState('friends');
+  const user = useContext(UserContext);
 
   const handleClick = (e) => {
     setDisplay(e.currentTarget.dataset.name);
@@ -20,8 +22,9 @@ export default function Controller({ selected, onClick }) {
   } else if (display === 'requests') {
     toRender = <Requests />;
   } else if (display === 'friends') {
-    toRender = <Friends />;
+    toRender = <Friends user={user} />;
   }
+
   return (
     <div className={styles.controller}>
       <div className={styles.content}>

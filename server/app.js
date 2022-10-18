@@ -39,7 +39,9 @@ app.use('/login', routes.login);
 app.use('/posts', routes.post);
 // jwtAuth adds the user to the request object, then we can send it in the response to react
 app.get('/userplease', jwtAuth, (req, res) => {
-  User.findOne({ _id: req.user.user._id }).then((user) => res.json(user));
+  User.findOne({ _id: req.user.user._id })
+    .populate('friendRequests')
+    .then((user) => res.json(user));
 });
 
 app.get('/hidden', (req, res) => {
