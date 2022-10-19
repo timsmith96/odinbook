@@ -60,6 +60,7 @@ function App() {
 
   // // log in form being submitted
   const handleSubmit = async (e) => {
+    // delete existing cookie?
     e.preventDefault();
     const res = await fetch('http://localhost:3000/login', {
       method: 'POST',
@@ -76,6 +77,7 @@ function App() {
       // if the log in is successful, the server gives us the user object which we are then storing in state here, (top level component) and then we use context to make it available to the components which need it
     } else {
       console.log('log in success');
+      console.log(json);
       setUser(json);
       navigate('/feed');
     }
