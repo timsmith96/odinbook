@@ -7,9 +7,15 @@ import styles from '../styles/Controller.module.css';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../../context/UserContext';
 
-export default function Controller({ selected, onClick }) {
+export default function Controller({
+  selected,
+  onClick,
+  onUserChange,
+  onSetUser,
+}) {
   const [display, setDisplay] = useState('friends');
   const user = useContext(UserContext);
+  console.log(user);
 
   const handleClick = (e) => {
     setDisplay(e.currentTarget.dataset.name);
@@ -18,7 +24,7 @@ export default function Controller({ selected, onClick }) {
   let toRender;
 
   if (display === 'suggestions') {
-    toRender = <Suggestions />;
+    toRender = <Suggestions onSetUser={onSetUser} />;
   } else if (display === 'requests') {
     toRender = <Requests />;
   } else if (display === 'friends') {

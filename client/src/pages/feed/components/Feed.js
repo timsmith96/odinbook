@@ -18,24 +18,26 @@ export default function Feed() {
 
   document.title = 'Odinbook';
 
+  console.log(user);
+
   useEffect(() => {
-    getPosts();
+    // getPosts();
   }, []);
 
   // making GET request to /posts to get all the posts
-  const getPosts = async () => {
-    const res = await fetch('http://localhost:3000/posts', {
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    setPosts(json);
-    setIsLoading(false);
-  };
+  // const getPosts = async () => {
+  //   const res = await fetch('http://localhost:3000/posts', {
+  //     method: 'GET',
+  //     mode: 'cors',
+  //     credentials: 'include',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+  //   const json = await res.json();
+  //   setPosts(json);
+  //   setIsLoading(false);
+  // };
 
   const handleInputChange = (e) => {
     e.target.value ? setTextEntered(true) : setTextEntered(false);

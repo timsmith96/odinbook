@@ -9,43 +9,32 @@ import Navbar from './components/Navbar';
 import ProfileController from './pages/profile/components/ProfileController';
 
 function App() {
-  const [selected, setSelected] = useState('home');
-  const [user, setUser] = useState('');
+  const [selected, setSelected] = useState();
+  const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [signInError, setSignInError] = useState();
   const navigate = useNavigate();
 
-  // runs only on inital render, and gets the current user (from cookies in the browser) and sets this as state. Once we have done this the inital time, any further changes to user (like changing profile pic) are done through setState of the user, using the json response from the server
-  // useEffect(() => {
-  //   if (!user) {
-  //     getUser();
-  //     setIsLoading(false);
-  //   }
-  // });
-
-  // get user
-  const getUser = async () => {
-    console.log('attempting to get user');
-    const res = await fetch('http://localhost:3000/userplease', {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    });
-    const json = await res.json();
-    if (res.status === 401) {
-      setSignInError(json);
-      // if the log in is successful, the server gives us the user object which we are then storing in state here, (top level component) and then we use context to make it available to the components which need it
-      console.log('error getting user');
+  // runs only on inital render, and gets the current user (from session storage in the browser) and sets this as state. Once we have done this the inital time, any further changes to user (like changing profile pic) are done through setState of the user, using the json response from the server
+  useEffect(() => {
+    console.log('in use effect');
+    const loggedInUser = sessionStorage.getItem('user');
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+      console.log('found user: ', foundUser);
+      console.log('user signed in');
     } else {
-      setUser(json);
-      setIsLoading(false);
-      console.log('got the user');
+      console.log('no user signed in');
     }
+  }, []);
+
+  // calling this when we add a profile image from the profile controller component
+  const onSetUser = (user) => {
+    sessionStorage.setItem('user', JSON.stringify(user));
+    setUser(user);
   };
 
   // // username input change
@@ -60,7 +49,9 @@ function App() {
 
   // // log in form being submitted
   const handleSubmit = async (e) => {
-    // delete existing cookie?
+    // delete existing storage
+    sessionStorage.clear();
+    localStorage.clear();
     e.preventDefault();
     const res = await fetch('http://localhost:3000/login', {
       method: 'POST',
@@ -78,7 +69,10 @@ function App() {
     } else {
       console.log('log in success');
       console.log(json);
-      setUser(json);
+      sessionStorage.setItem('user', JSON.stringify(json.user));
+      localStorage.setItem('token', json.token);
+      setUser(json.user);
+      console.log(json);
       navigate('/feed');
     }
   };
@@ -86,8 +80,6 @@ function App() {
   const handleClick = (e) => {
     setSelected(e.currentTarget.dataset.name);
   };
-
-  console.log('app refresehd');
 
   if (isLoading) {
     return <h1>loading</h1>;
@@ -116,10 +108,13 @@ function App() {
           }
         >
           <Route path="/feed" element={<Feed />} />
-          <Route path="/friends" element={<Controller />} />
+          <Route
+            path="/friends"
+            element={<Controller onSetUser={onSetUser} />}
+          />
           <Route
             path="/profile"
-            element={<ProfileController onUserChange={setUser} />}
+            element={<ProfileController onUserChange={onSetUser} />}
           />
         </Route>
       </Routes>

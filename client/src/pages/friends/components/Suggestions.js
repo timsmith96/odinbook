@@ -1,7 +1,8 @@
 import styles from '../styles/Suggestions.module.css';
+import SingleSuggestion from './SingleSuggestion';
 import { useState, useEffect } from 'react';
 
-export default function Suggestions() {
+export default function Suggestions({ onSetUser }) {
   const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -17,6 +18,7 @@ export default function Suggestions() {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
     const json = await res.json();
@@ -26,7 +28,7 @@ export default function Suggestions() {
 
   // making a patch request to to user clicked on to send a friend request to that user
   const handleClick = async (e) => {
-    console.log(e.currentTarget.dataset.user);
+    console.log('clicked');
     const res = await fetch(
       `http://localhost:3000/users/addFriend/${e.currentTarget.dataset.user}`,
       {
@@ -35,11 +37,12 @@ export default function Suggestions() {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }
     );
     const json = await res.json();
-    console.log(json);
+    onSetUser(json);
   };
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -49,24 +52,13 @@ export default function Suggestions() {
       <ul className={styles.suggestions_list}>
         {users.map((user) => {
           return (
-            <li className={styles.list_item}>
-              <div
-                className={styles.user_icon_container}
-                style={{
-                  backgroundImage: `url(${user.imageUrl})`,
-                }}
-              ></div>
-              <p
-                className={styles.suggestion_name_text}
-              >{`${user.firstName} ${user.surname}`}</p>
-              <button
-                className={styles.add_btn}
-                onClick={handleClick}
-                data-user={user._id}
-              >
-                Add friend
-              </button>
-            </li>
+            <SingleSuggestion
+              imageUrl={user.imageUrl}
+              firstName={user.firstName}
+              surname={user.surname}
+              onClick={handleClick}
+              id={user._id}
+            />
           );
         })}
       </ul>

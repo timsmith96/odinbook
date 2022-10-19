@@ -18,7 +18,8 @@ export default function Navbar({ selected, onClick }) {
   };
 
   const handleLogout = () => {
-    Cookies.remove('token');
+    localStorage.clear();
+    sessionStorage.clear();
   };
 
   return (

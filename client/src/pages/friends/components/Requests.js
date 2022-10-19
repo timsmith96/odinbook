@@ -10,6 +10,7 @@ export default function Requests() {
       <h2 className={styles.title}>Friend requests</h2>
       <ul className={styles.suggestions_list}>
         {user.friendRequests.map((friendRequest) => {
+          console.log(friendRequest);
           return (
             <li className={styles.list_item}>
               <div

@@ -13,7 +13,7 @@ export default function Controller({ onUserChange }) {
 
   useEffect(() => {
     async function submitImage() {
-      if (!image) {
+      if (!image || !user) {
         return;
       }
       const formData = new FormData();
@@ -23,13 +23,17 @@ export default function Controller({ onUserChange }) {
         mode: 'cors',
         credentials: 'include',
         body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       });
       // hopefully this updates the user object in context stored in state in app.js
       const json = await res.json();
+      console.log(json);
       onUserChange(json);
     }
     submitImage();
-  }, [image, user._id, onUserChange]);
+  }, [image]);
 
   if (user) {
     return (

@@ -3,7 +3,6 @@ import { ReactComponent as User } from '../../../assets/icons/navbar/user.svg';
 import { ReactComponent as Photo } from '../../../assets/icons/photoIcon.svg';
 
 export default function Newpost({ onModalClick, user }) {
-  console.log(user.imageUrl);
   return (
     <div className={styles.new_post}>
       <div className={styles.upper_row}>

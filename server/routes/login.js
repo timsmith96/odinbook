@@ -15,9 +15,10 @@ router.post('/', (req, res) => {
       user.checkPassword(req.body.password).then((data) => {
         // passwords match - have a token - added to cookies
         if (data) {
-          const token = jwt.sign({ user }, process.env.JWT_KEY);
-          res.cookie('token', token);
-          return res.json(user);
+          const token = jwt.sign({ user }, process.env.JWT_KEY, {
+            expiresIn: '1d',
+          });
+          return res.json({ user, token });
         } else {
           // passwords don't match
           return res.status(401).json('password incorrect - please try again');

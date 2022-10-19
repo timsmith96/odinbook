@@ -13,7 +13,6 @@ const sharp = require('sharp');
 const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const crypto = require('crypto');
 const jwtAuth = require('../middleware/auth.js');
-// const { constants } = require('buffer');
 
 const randomImageName = (bytes = 32) => {
   return crypto.randomBytes(bytes).toString('hex');
@@ -32,8 +31,10 @@ const s3 = new S3Client({
   region: bucketRegion,
 });
 
+// GET request to /users to get all the users
 router.get('/', jwtAuth, async (req, res) => {
   const users = await User.find({});
+  console.log('request recived for all users');
   res.json(users);
 });
 
@@ -85,51 +86,67 @@ router.post(
 
 // PATCH request to user to add a new profile image
 router.patch('/:id', jwtAuth, upload.single('image'), (req, res) => {
-  console.log('req.user.user._id = ', req.user.user._id);
-  User.findOne({ _id: req.user.user._id }).then((user) => {
-    const imageName = randomImageName();
-    console.log(req.file);
-    sharp(req.file.buffer)
-      .resize({ height: 200, width: 200, fit: 'cover' })
-      .toBuffer()
-      .then((data) => {
-        const params = {
-          Bucket: bucketName,
-          Key: imageName,
-          Body: data,
-          ContentType: req.file.mimetype,
-        };
-        const command = new PutObjectCommand(params);
-        s3.send(command);
-        user.profileImageName = imageName;
-        user
-          .save()
-          .then(() => console.log('saved the user after part 1'))
-          // once we've saved the user we go and get the image url from s3 and add this to the user object which we then return in the json response to react
-          .then(() => {
-            const getObjectParams = {
-              Bucket: bucketName,
-              Key: user.profileImageName,
-            };
-            const command = new GetObjectCommand(getObjectParams);
-            getSignedUrl(s3, command)
-              .then((url) => {
-                user.imageUrl = url;
-              })
-              .then(() => user.save().then((user) => res.json(user)));
-          });
-      });
-  });
+  User.findOne({ _id: req.user.user._id })
+    .populate('friendRequests')
+    .exec((err, user) => {
+      const imageName = randomImageName();
+      console.log(req.file);
+      sharp(req.file.buffer)
+        .resize({ height: 200, width: 200, fit: 'cover' })
+        .toBuffer()
+        .then((data) => {
+          const params = {
+            Bucket: bucketName,
+            Key: imageName,
+            Body: data,
+            ContentType: req.file.mimetype,
+          };
+          const command = new PutObjectCommand(params);
+          s3.send(command);
+          user.profileImageName = imageName;
+          user
+            .save()
+            .then(() => console.log('saved the user after part 1'))
+            // once we've saved the user we go and get the image url from s3 and add this to the user object which we then return in the json response to react
+            .then(() => {
+              const getObjectParams = {
+                Bucket: bucketName,
+                Key: user.profileImageName,
+              };
+              const command = new GetObjectCommand(getObjectParams);
+              getSignedUrl(s3, command)
+                .then((url) => {
+                  user.imageUrl = url;
+                })
+                .then(() =>
+                  user.save().then(() => {
+                    User.findOne({ _id: req.user.user._id })
+                      .populate('friendRequests')
+                      .exec((err, user) => {
+                        console.log(user);
+                        res.json(user);
+                      });
+                  })
+                );
+            });
+        });
+    });
 });
 
 // PATCH request to /users/addFriend/:id to add the requesting user onto the requested user's list of friends
 router.patch('/addFriend/:id', jwtAuth, async (req, res) => {
-  console.log(req.user);
   const requestingUser = await User.findOne({ _id: req.user.user._id });
   const requestedUser = await User.findOne({ _id: req.params.id });
   requestedUser.friendRequests.push(requestingUser);
-  requestedUser.save();
-  res.send(requestedUser);
+  requestingUser.requestsSent.push(requestedUser);
+  await requestedUser.save();
+  await requestingUser.save();
+  // have to refind the user after saving so we can send back to react requested users as a list of object ids, so we can use them for checking whether or not a request has been sent
+  const userToSendBack = await User.findOne({
+    _id: req.user.user._id,
+  }).populate('friendRequests');
+  res.json(userToSendBack);
+  console.log(userToSendBack);
 });
 
 module.exports = router;
