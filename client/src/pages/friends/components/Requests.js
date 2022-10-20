@@ -1,8 +1,9 @@
 import styles from '../styles/Requests.module.css';
 import { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../../context/UserContext';
+import SingleRequest from './SingleRequest';
 
-export default function Requests() {
+export default function Requests({ onSetUser }) {
   const user = useContext(UserContext);
 
   return (
@@ -10,23 +11,15 @@ export default function Requests() {
       <h2 className={styles.title}>Friend requests</h2>
       <ul className={styles.suggestions_list}>
         {user.friendRequests.map((friendRequest) => {
-          console.log(friendRequest);
           return (
-            <li className={styles.list_item}>
-              <div
-                className={styles.user_icon_container}
-                style={{
-                  backgroundImage: `url(${friendRequest.imageUrl})`,
-                }}
-              ></div>
-              <p className={styles.suggestion_name_text}>
-                {`${friendRequest.firstName} ${friendRequest.surname}`}
-              </p>
-              <div className={styles.btn_container}>
-                <button className={styles.add_btn}>Accept</button>
-                <button className={styles.decline_btn}>Decline</button>
-              </div>
-            </li>
+            <SingleRequest
+              key={friendRequest._id}
+              id={friendRequest._id}
+              imageUrl={friendRequest.imageUrl}
+              firstName={friendRequest.firstName}
+              surname={friendRequest.surname}
+              onSetUser={onSetUser}
+            />
           );
         })}
       </ul>

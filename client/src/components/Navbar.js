@@ -10,7 +10,7 @@ import { ReactComponent as Notify } from '../assets/icons/navbar/notify.svg';
 import { ReactComponent as User } from '../assets/icons/navbar/user.svg';
 import { ReactComponent as Logout } from '../assets/icons/navbar/logout.svg';
 
-export default function Navbar({ selected, onClick }) {
+export default function Navbar({ selected, onClick, setSelected }) {
   const [dropdown, setDropdown] = useState(false);
 
   const handleClick = () => {
@@ -20,7 +20,10 @@ export default function Navbar({ selected, onClick }) {
   const handleLogout = () => {
     localStorage.clear();
     sessionStorage.clear();
+    setSelected('');
   };
+
+  console.log(selected);
 
   return (
     <nav className={styles.nav}>

@@ -102,7 +102,11 @@ function App() {
         <Route
           element={
             <>
-              <Navbar selected={selected} onClick={handleClick} />
+              <Navbar
+                selected={selected}
+                setSelected={setSelected}
+                onClick={handleClick}
+              />
               <Outlet />
             </>
           }

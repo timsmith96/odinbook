@@ -33,7 +33,21 @@ const s3 = new S3Client({
 
 // GET request to /users to get all the users
 router.get('/', jwtAuth, async (req, res) => {
-  const users = await User.find({});
+  // want to exclude the current user from being able to add themselves, fairly sure this leads to race condition errors later down the line
+  // also creating friends array for the signed in user which we user to filter the suggested friends by making sure we don't suggest users who are already friends
+  const friends = req.user.friends.map((friend) => {
+    return friend._id;
+  });
+  const friendRequests = req.user.friendRequests.map((friendRequest) => {
+    return friendRequest._id;
+  });
+  const users = await User.find({
+    $and: [
+      { _id: { $ne: req.user._id } },
+      { _id: { $nin: friends } },
+      { _id: { $nin: friendRequests } },
+    ],
+  });
   console.log('request recived for all users');
   res.json(users);
 });
@@ -86,7 +100,7 @@ router.post(
 
 // PATCH request to user to add a new profile image
 router.patch('/:id', jwtAuth, upload.single('image'), (req, res) => {
-  User.findOne({ _id: req.user.user._id })
+  User.findOne({ _id: req.user._id })
     .populate('friendRequests')
     .exec((err, user) => {
       const imageName = randomImageName();
@@ -120,7 +134,7 @@ router.patch('/:id', jwtAuth, upload.single('image'), (req, res) => {
                 })
                 .then(() =>
                   user.save().then(() => {
-                    User.findOne({ _id: req.user.user._id })
+                    User.findOne({ _id: req.user._id })
                       .populate('friendRequests')
                       .exec((err, user) => {
                         console.log(user);
@@ -135,7 +149,7 @@ router.patch('/:id', jwtAuth, upload.single('image'), (req, res) => {
 
 // PATCH request to /users/addFriend/:id to add the requesting user onto the requested user's list of friends
 router.patch('/addFriend/:id', jwtAuth, async (req, res) => {
-  const requestingUser = await User.findOne({ _id: req.user.user._id });
+  const requestingUser = await User.findOne({ _id: req.user._id });
   const requestedUser = await User.findOne({ _id: req.params.id });
   requestedUser.friendRequests.push(requestingUser);
   requestingUser.requestsSent.push(requestedUser);
@@ -143,10 +157,42 @@ router.patch('/addFriend/:id', jwtAuth, async (req, res) => {
   await requestingUser.save();
   // have to refind the user after saving so we can send back to react requested users as a list of object ids, so we can use them for checking whether or not a request has been sent
   const userToSendBack = await User.findOne({
-    _id: req.user.user._id,
+    _id: req.user._id,
   }).populate('friendRequests');
   res.json(userToSendBack);
   console.log(userToSendBack);
 });
 
+// PATCH request to /users/acceptFriend/:id to accept the friend request
+router.patch('/acceptFriend/:id', jwtAuth, async (req, res) => {
+  const acceptingUser = await User.findOne({ _id: req.user._id });
+  // getting this from the request URL because we set it as a data-value in react
+  const acceptedUser = await User.findOne({ _id: req.params.id });
+  // filter the array to remove any requests which the user has just accepted
+  const filteredArr = acceptingUser.friendRequests.filter(
+    (friendRequest) =>
+      JSON.stringify(friendRequest._id) !== JSON.stringify(acceptedUser._id)
+  );
+  acceptingUser.friendRequests = filteredArr;
+  acceptingUser.friends.push(acceptedUser);
+  acceptedUser.friends.push(acceptingUser);
+  await acceptedUser.save();
+  try {
+    await acceptingUser.save();
+  } catch (err) {
+    console.error(err);
+  }
+  // have to refind the user after changing their list of friend requests and then send this back to react so it can update what it has in local storage
+  const userToSendBack = await User.findOne({
+    _id: req.user._id,
+  })
+    .populate('friendRequests')
+    .populate('friends');
+  res.json(userToSendBack);
+});
+
 module.exports = router;
+
+// acceptingUser.friendRequests.filter(
+//   (friendRequest) => friendRequest._id !== acceptedUser._id
+// );

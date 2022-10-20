@@ -26,7 +26,7 @@ export default function Controller({
   if (display === 'suggestions') {
     toRender = <Suggestions onSetUser={onSetUser} />;
   } else if (display === 'requests') {
-    toRender = <Requests />;
+    toRender = <Requests onSetUser={onSetUser} />;
   } else if (display === 'friends') {
     toRender = <Friends user={user} />;
   }

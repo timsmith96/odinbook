@@ -28,7 +28,6 @@ export default function Suggestions({ onSetUser }) {
 
   // making a patch request to to user clicked on to send a friend request to that user
   const handleClick = async (e) => {
-    console.log('clicked');
     const res = await fetch(
       `http://localhost:3000/users/addFriend/${e.currentTarget.dataset.user}`,
       {
@@ -58,6 +57,7 @@ export default function Suggestions({ onSetUser }) {
               surname={user.surname}
               onClick={handleClick}
               id={user._id}
+              key={user._id}
             />
           );
         })}
