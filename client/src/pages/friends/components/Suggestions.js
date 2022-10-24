@@ -44,10 +44,20 @@ export default function Suggestions({ onSetUser }) {
     onSetUser(json);
   };
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading)
+    return (
+      <div className={styles.suggestions}>
+        <h1>Loading...</h1>
+      </div>
+    );
   return (
     <div className={styles.suggestions}>
       <h2 className={styles.title}>People you may know</h2>
+      {users.length === 0 && (
+        <h3 className={styles.no_suggestions}>
+          friend suggestions will appear here as Odinbook grows :D
+        </h3>
+      )}
       <ul className={styles.suggestions_list}>
         {users.map((user) => {
           return (

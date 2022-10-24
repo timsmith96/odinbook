@@ -1,5 +1,5 @@
 import styles from './Navbar.module.css';
-import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { ReactComponent as Hamburger } from '../assets/icons/navbar/hamburger.svg';
@@ -20,10 +20,8 @@ export default function Navbar({ selected, onClick, setSelected }) {
   const handleLogout = () => {
     localStorage.clear();
     sessionStorage.clear();
-    setSelected('');
+    window.location.reload();
   };
-
-  console.log(selected);
 
   return (
     <nav className={styles.nav}>
@@ -68,19 +66,13 @@ export default function Navbar({ selected, onClick, setSelected }) {
         </Link>
       </ul>
       <ul className={`${styles.nav_right} ${dropdown ? styles.show : ''}`}>
-        <Link className={styles.container}>
-          <div className={styles.icon_container}>
-            <Plus />
-          </div>
-          <p>Create post</p>
-        </Link>
-        <Link className={styles.container}>
-          <div className={styles.icon_container}>
-            <Notify />
-          </div>
-          <p>Notifications</p>
-        </Link>
-        <Link className={styles.container} id={styles.user} to="/profile">
+        <Link
+          className={styles.container}
+          id={styles.user}
+          to="/profile"
+          onClick={onClick}
+          data-name="none"
+        >
           <div className={styles.icon_container}>
             <User />
           </div>
@@ -89,7 +81,6 @@ export default function Navbar({ selected, onClick, setSelected }) {
         <Link
           className={styles.container}
           id={styles.log_out}
-          to="/"
           onClick={handleLogout}
         >
           <div className={styles.icon_container}>

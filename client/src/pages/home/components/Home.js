@@ -10,6 +10,7 @@ export default function Home({
   onUserInputChange,
   onPasswordInputChange,
   signInError,
+  setSignInError,
 }) {
   const formTemplate = {
     firstName: '',
@@ -21,7 +22,7 @@ export default function Home({
   const [modal, setModal] = useState(false);
   const [form, setForm] = useState(formTemplate);
   const [errors, setErrors] = useState([]);
-  const [authError, setAuthError] = useState('');
+  const [userCreated, setUserCreated] = useState(false);
 
   // sign up form inputs
   const handleInputChange = (e) => {
@@ -45,7 +46,6 @@ export default function Home({
     <div className={styles.home}>
       <main className={`${modal ? styles.opacity : ''}`}>
         <div className={styles.logo}>
-          <p>{authError} </p>
           <h1>odinbook</h1>
           <p>
             Odinbook helps you connect and share with the people in your life.
@@ -57,6 +57,7 @@ export default function Home({
           onUserInputChange={onUserInputChange}
           onPasswordInputChange={onPasswordInputChange}
           signInError={signInError}
+          userCreated={userCreated}
         />
       </main>
       <Signup
@@ -66,6 +67,8 @@ export default function Home({
         onInputChange={handleInputChange}
         errors={errors}
         onError={handleErrors}
+        setUserCreated={setUserCreated}
+        setSignInError={setSignInError}
       />
     </div>
   );

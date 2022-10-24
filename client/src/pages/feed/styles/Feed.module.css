@@ -13,3 +13,18 @@
   text-align: center;
   margin-top: 100px;
 }
+
+.no_posts {
+  text-align: center;
+}
+
+.friends_link,
+.create_link {
+  color: #1877f2;
+}
+
+.friends_link:hover,
+.create_link:hover {
+  cursor: pointer;
+  color: #124d97;
+}

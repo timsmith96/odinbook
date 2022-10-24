@@ -1,4 +1,5 @@
 import styles from '../styles/SingleComment.module.css';
+import { ReactComponent as User } from '../../../assets/icons/navbar/user.svg';
 import { DateTime } from 'luxon';
 
 export default function SingleComment({
@@ -15,7 +16,9 @@ export default function SingleComment({
         style={{
           backgroundImage: `url(${commentProfileImage})`,
         }}
-      ></div>
+      >
+        {!commentProfileImage && <User className={styles.user_icon} />}
+      </div>
       <div className={styles.comment_text_container}>
         <p
           className={styles.user_name}
@@ -23,7 +26,7 @@ export default function SingleComment({
         <p className={styles.comment_text}>{text}</p>
       </div>
       <p className={styles.created_at}>
-        {DateTime.fromISO(createdAt).toLocaleString()}
+        {DateTime.fromISO(createdAt).toFormat('dd LLL yyyy HH:mm')}
       </p>
     </li>
   );

@@ -12,8 +12,9 @@
 .list_item {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   padding: 10px 0;
+  gap: 30px;
 }
 
 .list_item:hover {
@@ -25,6 +26,13 @@
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #d8dadf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .suggestion_name_text {

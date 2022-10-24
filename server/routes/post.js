@@ -5,14 +5,9 @@ const Comment = require('../models/comment');
 const { body } = require('express-validator');
 const jwtAuth = require('../middleware/auth');
 const upload = require('../middleware/multer');
-const {
-  S3Client,
-  PutObjectCommand,
-  GetObjectCommand,
-} = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const crypto = require('crypto');
 const sharp = require('sharp');
-const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 
 const randomImageName = (bytes = 32) =>
   crypto.randomBytes(bytes).toString('hex');
@@ -38,7 +33,8 @@ router.post(
   body('text').trim(),
   (req, res) => {
     // user has been added to request obj by the jwtAuth middleware
-    const { user } = req.user;
+    const user = req.user;
+    console.log(req.user);
     // creating the post
     const post = new Post({
       user: user._id,
@@ -46,7 +42,6 @@ router.post(
     });
     // if there is an image sent with the request, do the image stuff
     if (req.file !== undefined) {
-      console.log('image present');
       // resize image
       const imageName = randomImageName();
       sharp(req.file.buffer)
@@ -82,10 +77,16 @@ router.post(
 );
 
 // GET request to /posts to get all the posts and handle images as well
-router.get('/', async (req, res) => {
+router.get('/', jwtAuth, async (req, res) => {
   // get all the posts
-  const posts = await Post.find({})
-    // initial populating, can't populate user within comments here, have to do it after this call it seems
+  console.log(req.user.friends);
+  const friends = req.user.friends.map((friend) => {
+    return friend._id;
+  });
+  const posts = await Post.find({
+    $or: [{ user: req.user._id }, { user: { $in: friends } }],
+  })
+    .sort({ createdAt: 'descending' })
     .populate('user')
     .populate('likes')
     .populate('comments');
@@ -93,14 +94,7 @@ router.get('/', async (req, res) => {
   for (const post of posts) {
     await post.populate('comments.user');
     if (post.imageName !== undefined) {
-      // so we do it here
-      const getObjectParams = {
-        Bucket: bucketName,
-        Key: post.imageName,
-      };
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(s3, command);
-      post.imageUrl = url;
+      post.imageUrl = 'https://drf5kbede68oh.cloudfront.net/' + post.imageName;
     }
   }
   return res.json(posts);
@@ -112,7 +106,7 @@ router.patch('/:id', jwtAuth, async (req, res) => {
   // if the request wants to add a comment
   if (req.headers.comments === 'true') {
     const comment = new Comment({
-      user: req.user.user._id,
+      user: req.user._id,
       text: req.body.text,
     });
     await comment.save();
@@ -131,7 +125,7 @@ router.patch('/:id', jwtAuth, async (req, res) => {
     console.log('post already liked - unliking');
     // removing the user from the post's array of likes
     const updatedLikes = post.likes.filter(
-      (user) => user.id !== req.user.user._id
+      (user) => JSON.stringify(user._id) !== JSON.stringify(req.user._id)
     );
     // updating the post's likes array to the filtered array
     post.likes = updatedLikes;
@@ -139,7 +133,7 @@ router.patch('/:id', jwtAuth, async (req, res) => {
   } else {
     console.log('post not liked - liking');
     // user wants to like post - push user object to post's array of likes
-    post.likes.push(req.user.user);
+    post.likes.push(req.user);
     await post.save();
   }
   return res.json(post.likes);

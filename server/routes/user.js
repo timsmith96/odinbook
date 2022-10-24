@@ -4,13 +4,8 @@ const User = require('../models/user');
 const { body, validationResult } = require('express-validator');
 const upload = require('../middleware/multer');
 const bcrypt = require('bcryptjs');
-const {
-  S3Client,
-  PutObjectCommand,
-  GetObjectCommand,
-} = require('@aws-sdk/client-s3');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const sharp = require('sharp');
-const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
 const crypto = require('crypto');
 const jwtAuth = require('../middleware/auth.js');
 
@@ -104,7 +99,6 @@ router.patch('/:id', jwtAuth, upload.single('image'), (req, res) => {
     .populate('friendRequests')
     .exec((err, user) => {
       const imageName = randomImageName();
-      console.log(req.file);
       sharp(req.file.buffer)
         .resize({ height: 200, width: 200, fit: 'cover' })
         .toBuffer()
@@ -118,31 +112,19 @@ router.patch('/:id', jwtAuth, upload.single('image'), (req, res) => {
           const command = new PutObjectCommand(params);
           s3.send(command);
           user.profileImageName = imageName;
-          user
-            .save()
-            .then(() => console.log('saved the user after part 1'))
-            // once we've saved the user we go and get the image url from s3 and add this to the user object which we then return in the json response to react
-            .then(() => {
-              const getObjectParams = {
-                Bucket: bucketName,
-                Key: user.profileImageName,
-              };
-              const command = new GetObjectCommand(getObjectParams);
-              getSignedUrl(s3, command)
-                .then((url) => {
-                  user.imageUrl = url;
-                })
-                .then(() =>
-                  user.save().then(() => {
-                    User.findOne({ _id: req.user._id })
-                      .populate('friendRequests')
-                      .exec((err, user) => {
-                        console.log(user);
-                        res.json(user);
-                      });
-                  })
-                );
+          user.save().then(() => {
+            user.imageUrl =
+              'https://drf5kbede68oh.cloudfront.net/' + user.profileImageName;
+            user.save().then(() => {
+              User.findOne({ _id: req.user._id })
+                .populate('friendRequests')
+                .populate('friends')
+                .exec((err, user) => {
+                  console.log(user);
+                  res.json(user);
+                });
             });
+          });
         });
     });
 });
@@ -158,7 +140,9 @@ router.patch('/addFriend/:id', jwtAuth, async (req, res) => {
   // have to refind the user after saving so we can send back to react requested users as a list of object ids, so we can use them for checking whether or not a request has been sent
   const userToSendBack = await User.findOne({
     _id: req.user._id,
-  }).populate('friendRequests');
+  })
+    .populate('friendRequests')
+    .populate('friends');
   res.json(userToSendBack);
   console.log(userToSendBack);
 });
@@ -191,8 +175,22 @@ router.patch('/acceptFriend/:id', jwtAuth, async (req, res) => {
   res.json(userToSendBack);
 });
 
-module.exports = router;
+// PATCH request to /users/rejectFriend/:id to reject the friend request
+router.patch('/rejectFriend/:id', jwtAuth, async (req, res) => {
+  const rejectingUser = await User.findOne({ _id: req.user._id });
+  // getting this from the request URL because we set it as a data-value in react
+  const rejectedUser = await User.findOne({ _id: req.params.id });
+  const filteredArr = rejectingUser.friendRequests.filter(
+    (friendRequest) =>
+      JSON.stringify(friendRequest._id) !== JSON.stringify(rejectedUser._id)
+  );
+  rejectingUser.friendRequests = filteredArr;
+  await rejectingUser.save();
+  console.log(req.user._id);
+  const userToSendBack = await User.findOne({ _id: req.user._id })
+    .populate('friends')
+    .populate('friendRequests');
+  res.json(userToSendBack);
+});
 
-// acceptingUser.friendRequests.filter(
-//   (friendRequest) => friendRequest._id !== acceptedUser._id
-// );
+module.exports = router;

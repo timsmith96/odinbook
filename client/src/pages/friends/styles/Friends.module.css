@@ -1,24 +1,26 @@
 .suggestions {
   width: 100%;
   background-color: #fff;
-  padding: 10px;
+  padding: 20px 40px;
   min-height: 90vh;
 }
 
 .title {
-  padding-bottom: 10px;
+  padding-bottom: 40px;
 }
 
-.list_item {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px 0;
+.no_friends {
+  text-align: center;
+  margin-top: 40px;
 }
 
-.list_item:hover {
-  background-color: #f0f2f5;
-  border-radius: 10px;
+.suggestions_link {
+  color: #1a6ed8;
+}
+
+.suggestions_link:hover {
+  color: #124d97;
+  cursor: pointer;
 }
 
 .user_icon_container {
@@ -55,11 +57,9 @@
     border-radius: 0;
   }
   .suggestions_list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+    gap: 20px;
   }
   .list_item {
     flex-direction: column;

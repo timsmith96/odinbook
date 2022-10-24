@@ -1,6 +1,7 @@
 import styles from '../styles/SingleSuggestion.module.css';
 import { UserContext } from '../../../context/UserContext';
 import { useContext, useState } from 'react';
+import { ReactComponent as User } from '../../../assets/icons/profile/profile.svg';
 
 export default function SingleSuggestion({
   imageUrl,
@@ -18,7 +19,9 @@ export default function SingleSuggestion({
         style={{
           backgroundImage: `url(${imageUrl})`,
         }}
-      ></div>
+      >
+        {!imageUrl && <User />}
+      </div>
       <p className={styles.suggestion_name_text}>{`${firstName} ${surname}`}</p>
       {!user.requestsSent.includes(id) && (
         <button className={styles.add_btn} onClick={onClick} data-user={id}>

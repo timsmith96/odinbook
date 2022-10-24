@@ -1,4 +1,5 @@
 import styles from '../styles/SingleRequest.module.css';
+import { ReactComponent as User } from '../../../assets/icons/profile/profile.svg';
 
 export default function SingleRequest({
   id,
@@ -26,7 +27,21 @@ export default function SingleRequest({
   };
 
   const handleRejectClick = async (e) => {
-    console.log(e.currentTarget.dataset.id);
+    const res = await fetch(
+      `http://localhost:3000/users/rejectfriend/${e.currentTarget.dataset.id}`,
+      {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    );
+    const json = await res.json();
+    // getting back the updated user from our server and using the set state method we have on app to update the user which then trickles down via context - may need to populate the user sent back from the server at some stage
+    onSetUser(json);
   };
   return (
     <li className={styles.list_item}>
@@ -35,7 +50,9 @@ export default function SingleRequest({
         style={{
           backgroundImage: `url(${imageUrl})`,
         }}
-      ></div>
+      >
+        {!imageUrl && <User />}
+      </div>
       <p className={styles.suggestion_name_text}>{`${firstName} ${surname}`}</p>
       <div className={styles.btn_container}>
         <button

@@ -4,6 +4,7 @@ import { ReactComponent as Likes } from '../../../assets/icons/post/likes.svg';
 import { ReactComponent as Like } from '../../../assets/icons/post/like.svg';
 import { ReactComponent as Unlike } from '../../../assets/icons/post/unlike.svg';
 import { ReactComponent as Comment } from '../../../assets/icons/post/comment.svg';
+import { ReactComponent as User } from '../../../assets/icons/navbar/user.svg';
 import { useState } from 'react';
 const { DateTime } = require('luxon');
 
@@ -38,6 +39,7 @@ export default function Post({
       credentials: 'include',
       headers: {
         liked: liked,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
     // API gives us back the new list of likes for the post...
@@ -60,6 +62,7 @@ export default function Post({
     setCommentInput(e.target.value);
   };
 
+  // PATCH request to add a new comment to a post
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     setCommentInput('');
@@ -70,6 +73,7 @@ export default function Post({
       headers: {
         'Content-Type': 'application/json',
         comments: 'true',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({ text: commentInput }),
     });
@@ -85,11 +89,13 @@ export default function Post({
           style={{
             backgroundImage: `url(${avatarUrl})`,
           }}
-        ></div>
+        >
+          {!avatarUrl && <User className={styles.user_icon} />}
+        </div>
         <div className={styles.user_info_container}>
           <p className={styles.user_name}>{`${firstName} ${surname}`}</p>
           <p className={styles.post_date}>
-            {DateTime.fromISO(dateCreated).toLocaleString()}
+            {DateTime.fromISO(dateCreated).toFormat('dd LLL yyyy')}
           </p>
         </div>
       </div>

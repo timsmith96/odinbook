@@ -6,6 +6,7 @@ export default function Signin({
   onUserInputChange,
   onPasswordInputChange,
   signInError,
+  userCreated,
 }) {
   return (
     <div className={styles.form_wrapper}>
@@ -16,12 +17,14 @@ export default function Signin({
             type="text"
             placeholder="Username"
             onChange={onUserInputChange}
+            required={true}
           />
           <input
             className={styles.form_input}
             type="password"
             placeholder="Password"
             onChange={onPasswordInputChange}
+            required={true}
           />
           <button className={styles.button} type="submit">
             Log in
@@ -37,6 +40,11 @@ export default function Signin({
       >
         Create New Account
       </button>
+      {userCreated && (
+        <p className={styles.created_success}>
+          Account created succesfully - please sign in above
+        </p>
+      )}
     </div>
   );
 }

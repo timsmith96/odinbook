@@ -19,15 +19,15 @@ function App() {
 
   // runs only on inital render, and gets the current user (from session storage in the browser) and sets this as state. Once we have done this the inital time, any further changes to user (like changing profile pic) are done through setState of the user, using the json response from the server
   useEffect(() => {
-    console.log('in use effect');
     const loggedInUser = sessionStorage.getItem('user');
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       setUser(foundUser);
-      console.log('found user: ', foundUser);
-      console.log('user signed in');
     } else {
-      console.log('no user signed in');
+      console.log(
+        'no user signed in - reloading and navigating to log in screen'
+      );
+      navigate('/');
     }
   }, []);
 
@@ -67,12 +67,9 @@ function App() {
       setSignInError(json);
       // if the log in is successful, the server gives us the user object which we are then storing in state here, (top level component) and then we use context to make it available to the components which need it
     } else {
-      console.log('log in success');
-      console.log(json);
       sessionStorage.setItem('user', JSON.stringify(json.user));
       localStorage.setItem('token', json.token);
       setUser(json.user);
-      console.log(json);
       navigate('/feed');
     }
   };
@@ -96,6 +93,7 @@ function App() {
               onPasswordInputChange={handlePasswordInputChange}
               onUserInputChange={handleUserInputChange}
               signInError={signInError}
+              setSignInError={setSignInError}
             />
           }
         />

@@ -8,6 +8,8 @@ export default function Signup({
   onInputChange,
   errors,
   onError,
+  setUserCreated,
+  setSignInError,
 }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +25,9 @@ export default function Signup({
     if (res.status === 400) {
       onError(json.errors);
     } else {
-      console.log('success');
+      onCloseClick();
+      setUserCreated(true);
+      setSignInError('');
     }
   };
 

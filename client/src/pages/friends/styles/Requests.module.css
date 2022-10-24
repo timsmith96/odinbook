@@ -1,12 +1,17 @@
 .suggestions {
   width: 100%;
   background-color: #fff;
-  padding: 10px;
-  min-height: 100vh;
+  padding: 20px 40px;
+  min-height: calc(100vh - 90px);
 }
 
 .title {
-  padding-bottom: 10px;
+  padding-bottom: 40px;
+}
+
+.no_friends {
+  text-align: center;
+  margin: 40px;
 }
 
 .list_item {
@@ -73,11 +78,9 @@
     border-radius: 0;
   }
   .suggestions_list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+    gap: 20px;
   }
   .list_item {
     flex-direction: column;

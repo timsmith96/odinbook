@@ -1,4 +1,5 @@
 import styles from '../styles/SingleFriend.module.css';
+import { ReactComponent as User } from '../../../assets/icons/profile/profile.svg';
 
 export default function SingleFriend({ firstName, surname, imageUrl }) {
   return (
@@ -8,9 +9,11 @@ export default function SingleFriend({ firstName, surname, imageUrl }) {
         style={{
           backgroundImage: `url(${imageUrl})`,
         }}
-      ></div>
+      >
+        {!imageUrl && <User />}
+      </div>
       <p className={styles.suggestion_name_text}>{`${firstName} ${surname}`}</p>
-      <button className={styles.add_btn}>View profile</button>
+      {/* <button className={styles.add_btn}>View profile</button> */}
     </li>
   );
 }

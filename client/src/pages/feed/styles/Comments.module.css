@@ -12,11 +12,17 @@
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #bfc2c6;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-position: center;
-  background-size: cover;
+}
+
+.user_icon path {
+  fill: #fff;
 }
 
 .create_comment_form {

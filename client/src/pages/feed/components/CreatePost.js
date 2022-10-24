@@ -53,6 +53,7 @@ export default function CreatePost({
             id="file-upload"
             onChange={onImageChange}
             className={styles.file_input}
+            accept=".jpg,.jpeg,.png"
           />
           {image && (
             <div className={styles.upload_status}>

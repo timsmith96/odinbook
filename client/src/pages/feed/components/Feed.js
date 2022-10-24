@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import styles from '../styles/Feed.module.css';
 import { UserContext } from '../../../context/UserContext';
+import { Link } from 'react-router-dom';
 
 export default function Feed() {
   const [showModal, setShowModal] = useState(false);
@@ -16,28 +17,26 @@ export default function Feed() {
   const navigate = useNavigate();
   const user = useContext(UserContext);
 
-  document.title = 'Odinbook';
-
-  console.log(user);
-
   useEffect(() => {
-    // getPosts();
+    getPosts();
   }, []);
 
   // making GET request to /posts to get all the posts
-  // const getPosts = async () => {
-  //   const res = await fetch('http://localhost:3000/posts', {
-  //     method: 'GET',
-  //     mode: 'cors',
-  //     credentials: 'include',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   });
-  //   const json = await res.json();
-  //   setPosts(json);
-  //   setIsLoading(false);
-  // };
+  const getPosts = async () => {
+    const res = await fetch('http://localhost:3000/posts', {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    const json = await res.json();
+    console.log(json);
+    setPosts(json);
+    setIsLoading(false);
+  };
 
   const handleInputChange = (e) => {
     e.target.value ? setTextEntered(true) : setTextEntered(false);
@@ -71,6 +70,9 @@ export default function Feed() {
       mode: 'cors',
       credentials: 'include',
       body: formData,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     });
     const json = await res.json();
     if (res.status === 403) {
@@ -88,6 +90,20 @@ export default function Feed() {
     <div className={styles.feed}>
       <div className={`${showModal ? styles.opacity : ''}`}>
         <Newpost onModalClick={handleModalChange} user={user} />
+        {posts.length === 0 && (
+          <h3 className={styles.no_posts}>
+            No posts to display.
+            <Link className={styles.friends_link} to="/friends">
+              {' '}
+              Find friends
+            </Link>{' '}
+            or{' '}
+            <span className={styles.create_link} onClick={handleModalChange}>
+              create a post
+            </span>
+            ...
+          </h3>
+        )}
         {/* creating our posts */}
         {posts.map((post) => (
           <Post

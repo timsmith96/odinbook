@@ -1,5 +1,6 @@
 import styles from '../styles/Comments.module.css';
 import SingleComment from './SingleComment';
+import { ReactComponent as User } from '../../../assets/icons/navbar/user.svg';
 
 export default function Comments({
   display,
@@ -17,7 +18,9 @@ export default function Comments({
           style={{
             backgroundImage: `url(${user.imageUrl})`,
           }}
-        ></div>
+        >
+          {!user.imageUrl && <User className={styles.user_icon} />}
+        </div>
         <form className={styles.create_comment_form} onSubmit={onSubmit}>
           <textarea
             onChange={onCommentTextChange}
