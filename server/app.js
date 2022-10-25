@@ -24,7 +24,7 @@ app.use(async (req, res, next) => {
 app.use(
   cors({
     credentials: true,
-    origin: 'https://charming-custard-50007f.netlify.app/',
+    origin: 'https://charming-custard-50007f.netlify.app',
   })
 );
 
