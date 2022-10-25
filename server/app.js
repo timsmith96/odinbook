@@ -24,7 +24,7 @@ app.use(async (req, res, next) => {
 app.use(
   cors({
     credentials: true,
-    origin: 'https://cryptic-wave-65159.herokuapp.com/',
+    origin: 'https://charming-custard-50007f.netlify.app/',
   })
 );
 
