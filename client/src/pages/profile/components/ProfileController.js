@@ -17,7 +17,8 @@ export default function Controller({ onUserChange }) {
 
   async function submitImage(e) {
     console.log('inside submit image');
-    setImage(e.target.files[0]);
+    console.log(e.target.files);
+    setImage(e.currentTarget.files[0]);
     const formData = new FormData();
     formData.append('image', image);
     const res = await fetch(
