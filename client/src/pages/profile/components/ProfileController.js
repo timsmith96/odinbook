@@ -2,18 +2,26 @@ import styles from '../styles/ProfileController.module.css';
 import Post from '../../feed/components/Post';
 import { ReactComponent as Camera } from '../../../assets/icons/profile/camera.svg';
 import { ReactComponent as Profile } from '../../../assets/icons/profile/profile.svg';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { UserContext } from '../../../context/UserContext';
 
 export default function Controller({ onUserChange }) {
   const [image, setImage] = useState();
   const [posts, setPosts] = useState();
   const user = useContext(UserContext);
+  const didMount = useRef(false);
 
   useEffect(() => {
     console.log('getting posts');
     getPosts();
   }, [user]);
+
+  useEffect(() => {
+    if (!didMount.current) {
+      return (didMount.current = true);
+    }
+    submitImage();
+  }, [image]);
 
   async function submitImage(e) {
     console.log('inside submit image');
@@ -76,15 +84,13 @@ export default function Controller({ onUserChange }) {
                 </div>
                 {!user.imageUrl && <Profile />}
               </label>
-              <form onSubmit={submitImage}>
-                <input
-                  type="file"
-                  id="file-upload"
-                  onChange={(e) => setImage(e.target.files[0])}
-                  className={styles.file_input}
-                  accept=".jpg,.jpeg,.png"
-                />
-              </form>
+              <input
+                type="file"
+                id="file-upload"
+                onChange={(e) => setImage(e.target.files[0])}
+                className={styles.file_input}
+                accept=".jpg,.jpeg,.png"
+              />
             </div>
             <div className={styles.user_info}>
               <h2 className={styles.user_name}>
