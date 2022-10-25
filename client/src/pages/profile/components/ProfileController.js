@@ -29,7 +29,6 @@ export default function Controller({ onUserChange }) {
         body: formData,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'multipart/form-data',
         },
       }
     );
