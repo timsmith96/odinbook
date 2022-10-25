@@ -39,6 +39,7 @@ export default function Controller({ onUserChange }) {
       onUserChange(json);
     }
     submitImage();
+    window.location.reload();
   }, [image]);
 
   // function to get all of a user's posts based on the user's id
