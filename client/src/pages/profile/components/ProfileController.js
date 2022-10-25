@@ -17,6 +17,7 @@ export default function Controller({ onUserChange }) {
 
   async function submitImage(e) {
     if (!image || !user) {
+      console.log('inside submit image no image or user...returning');
       return;
     }
     console.log('inside submit image');
@@ -42,7 +43,7 @@ export default function Controller({ onUserChange }) {
   }
 
   // function to get all of a user's posts based on the user's id
-  const getPosts = async () => {
+  const getPosts = async (e) => {
     if (!user) {
       return;
     }
@@ -82,7 +83,7 @@ export default function Controller({ onUserChange }) {
               <input
                 type="file"
                 id="file-upload"
-                onChange={(e) => submitImage(e)}
+                onChange={submitImage}
                 className={styles.file_input}
                 accept=".jpg,.jpeg,.png"
               />
