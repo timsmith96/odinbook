@@ -2,14 +2,13 @@ import styles from '../styles/ProfileController.module.css';
 import Post from '../../feed/components/Post';
 import { ReactComponent as Camera } from '../../../assets/icons/profile/camera.svg';
 import { ReactComponent as Profile } from '../../../assets/icons/profile/profile.svg';
-import { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../../context/UserContext';
 
 export default function Controller({ onUserChange }) {
   const [image, setImage] = useState();
   const [posts, setPosts] = useState();
   const user = useContext(UserContext);
-  const didMount = useRef(false);
 
   // function to get all of a user's posts based on the user's id
   const getPosts = async (e) => {
@@ -59,8 +58,9 @@ export default function Controller({ onUserChange }) {
   }, [user]);
 
   useEffect(() => {
-    if (!didMount.current) {
-      return (didMount.current = true);
+    if (!image) {
+      console.log('returning');
+      return;
     }
     submitImage();
   }, [image]);
