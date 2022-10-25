@@ -15,31 +15,30 @@ export default function Controller({ onUserChange }) {
     getPosts();
   }, [user]);
 
-  useEffect(() => {
-    async function submitImage() {
-      if (!image || !user) {
-        return;
-      }
-      const formData = new FormData();
-      formData.append('image', image);
-      const res = await fetch(
-        `https://cryptic-wave-65159.herokuapp.com/users/${user._id}`,
-        {
-          method: 'PATCH',
-          mode: 'cors',
-          credentials: 'include',
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
-      );
-      // hopefully this updates the user object in context stored in state in app.js
-      const json = await res.json();
-      onUserChange(json);
+  async function submitImage(e) {
+    if (!image || !user) {
+      return;
     }
-    submitImage();
-  }, [image]);
+    setImage(e.target.files[0]);
+    const formData = new FormData();
+    formData.append('image', image);
+    const res = await fetch(
+      `https://cryptic-wave-65159.herokuapp.com/users/${user._id}`,
+      {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'include',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    );
+    // hopefully this updates the user object in context stored in state in app.js
+    const json = await res.json();
+    onUserChange(json);
+    window.location.reload();
+  }
 
   // function to get all of a user's posts based on the user's id
   const getPosts = async () => {
@@ -82,7 +81,7 @@ export default function Controller({ onUserChange }) {
               <input
                 type="file"
                 id="file-upload"
-                onChange={(e) => setImage(e.target.files[0])}
+                onChange={(e) => submitImage()}
                 className={styles.file_input}
                 accept=".jpg,.jpeg,.png"
               />
