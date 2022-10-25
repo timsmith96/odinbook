@@ -16,10 +16,6 @@ export default function Controller({ onUserChange }) {
   }, [user]);
 
   async function submitImage(e) {
-    if (!image || !user) {
-      console.log('inside submit image no image or user...returning');
-      return;
-    }
     console.log('inside submit image');
     setImage(e.target.files[0]);
     const formData = new FormData();
