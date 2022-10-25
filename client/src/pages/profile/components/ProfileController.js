@@ -17,8 +17,7 @@ export default function Controller({ onUserChange }) {
 
   async function submitImage(e) {
     console.log('inside submit image');
-    console.log(e.target.files);
-    setImage(e.currentTarget.files[0]);
+    console.log(image);
     const formData = new FormData();
     formData.append('image', image);
     const res = await fetch(
@@ -77,13 +76,15 @@ export default function Controller({ onUserChange }) {
                 </div>
                 {!user.imageUrl && <Profile />}
               </label>
-              <input
-                type="file"
-                id="file-upload"
-                onChange={submitImage}
-                className={styles.file_input}
-                accept=".jpg,.jpeg,.png"
-              />
+              <form onSubmit={submitImage}>
+                <input
+                  type="file"
+                  id="file-upload"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  className={styles.file_input}
+                  accept=".jpg,.jpeg,.png"
+                />
+              </form>
             </div>
             <div className={styles.user_info}>
               <h2 className={styles.user_name}>
