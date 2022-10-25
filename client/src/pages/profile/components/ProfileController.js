@@ -43,7 +43,6 @@ export default function Controller({ onUserChange }) {
     // hopefully this updates the user object in context stored in state in app.js
     const json = await res.json();
     onUserChange(json);
-    window.location.reload();
   }
 
   // function to get all of a user's posts based on the user's id
