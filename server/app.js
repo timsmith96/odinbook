@@ -6,20 +6,20 @@ const User = require('./models/user');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const jwtAuth = require('./middleware/auth');
 
 const app = express();
 
 // middlewear
-app.use(cookieParser());
+// app.use(cookieParser());
 
-app.use(async (req, res, next) => {
-  req.context = {
-    User,
-  };
-  next();
-});
+// app.use(async (req, res, next) => {
+//   req.context = {
+//     User,
+//   };
+//   next();
+// });
 
 app.use(
   cors({
