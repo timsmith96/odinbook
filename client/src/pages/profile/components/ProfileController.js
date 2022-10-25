@@ -11,17 +11,25 @@ export default function Controller({ onUserChange }) {
   const user = useContext(UserContext);
   const didMount = useRef(false);
 
-  useEffect(() => {
-    console.log('getting posts');
-    getPosts();
-  }, [user]);
-
-  useEffect(() => {
-    if (!didMount.current) {
-      return (didMount.current = true);
+  // function to get all of a user's posts based on the user's id
+  const getPosts = async (e) => {
+    if (!user) {
+      return;
     }
-    submitImage();
-  }, [image]);
+    const res = await fetch(
+      `https://cryptic-wave-65159.herokuapp.com/posts/user`,
+      {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    );
+    const json = await res.json();
+    setPosts(json);
+  };
 
   async function submitImage(e) {
     console.log('inside submit image');
@@ -45,25 +53,17 @@ export default function Controller({ onUserChange }) {
     onUserChange(json);
   }
 
-  // function to get all of a user's posts based on the user's id
-  const getPosts = async (e) => {
-    if (!user) {
-      return;
+  useEffect(() => {
+    console.log('getting posts');
+    getPosts();
+  }, [user]);
+
+  useEffect(() => {
+    if (!didMount.current) {
+      return (didMount.current = true);
     }
-    const res = await fetch(
-      `https://cryptic-wave-65159.herokuapp.com/posts/user`,
-      {
-        method: 'GET',
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      }
-    );
-    const json = await res.json();
-    setPosts(json);
-  };
+    submitImage();
+  }, [image]);
 
   if (user && posts) {
     return (
