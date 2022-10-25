@@ -2,10 +2,11 @@
   max-width: 1250px;
   width: 90%;
   margin: 0 auto;
+  min-height: calc(100vh - 90px);
 }
 
 .header {
-  margin-top: 80px;
+  padding-top: 80px;
   text-align: center;
 }
 
@@ -69,4 +70,19 @@
 
 .user_info_container {
   background-color: #f0f2f5;
+}
+
+/* Loading */
+.loading_title {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* user posts */
+.wrapper {
+  background-color: #f0f2f5;
+}
+
+.empty_posts {
+  text-align: center;
 }

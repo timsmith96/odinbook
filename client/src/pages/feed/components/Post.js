@@ -19,6 +19,7 @@ export default function Post({
   user,
   comments,
   avatarUrl,
+  deletable,
 }) {
   // get likes from the API call in feed, then new likes varible to likes
   const [updatedLikes, setUpdatedLikes] = useState(likes);
@@ -81,6 +82,21 @@ export default function Post({
     setUpdatedComments(json);
   };
 
+  // DELETE request to delete a post
+  const handleDelete = async () => {
+    console.log('delete clicked');
+    await fetch(`http://localhost:3000/posts/${id}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    window.location.reload();
+  };
+
   return (
     <div className={styles.post}>
       <div className={styles.post_header_container}>
@@ -98,6 +114,13 @@ export default function Post({
             {DateTime.fromISO(dateCreated).toFormat('dd LLL yyyy')}
           </p>
         </div>
+        {deletable && (
+          <div className={styles.delete_btn_container}>
+            <button className={styles.delete_btn} onClick={handleDelete}>
+              Delete Post
+            </button>
+          </div>
+        )}
       </div>
       <div className={styles.post_text_container}>
         <p className={styles.post_text}>{text}</p>

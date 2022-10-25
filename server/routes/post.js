@@ -78,8 +78,6 @@ router.post(
 
 // GET request to /posts to get all the posts and handle images as well
 router.get('/', jwtAuth, async (req, res) => {
-  // get all the posts
-  console.log(req.user.friends);
   const friends = req.user.friends.map((friend) => {
     return friend._id;
   });
@@ -90,7 +88,24 @@ router.get('/', jwtAuth, async (req, res) => {
     .populate('user')
     .populate('likes')
     .populate('comments');
-  // loop through posts and add s3 url to each post
+  // loop through posts and add CloudFront url to each post
+  for (const post of posts) {
+    await post.populate('comments.user');
+    if (post.imageName !== undefined) {
+      post.imageUrl = 'https://drf5kbede68oh.cloudfront.net/' + post.imageName;
+    }
+  }
+  return res.json(posts);
+});
+
+// GET request to /posts/:id to get all the posts for the logged in user
+router.get('/:id', jwtAuth, async (req, res) => {
+  const posts = await Post.find({ user: req.user._id })
+    .sort({ createdAt: 'descending' })
+    .populate('user')
+    .populate('likes')
+    .populate('comments');
+  // loop through posts and add CloudFront url to each post
   for (const post of posts) {
     await post.populate('comments.user');
     if (post.imageName !== undefined) {
@@ -137,6 +152,12 @@ router.patch('/:id', jwtAuth, async (req, res) => {
     await post.save();
   }
   return res.json(post.likes);
+});
+
+// DELETE request to /posts/:postid to delete a post
+router.delete('/:id', jwtAuth, async (req, res) => {
+  await Post.deleteOne({ _id: req.params.id });
+  res.send('delete route reached');
 });
 
 module.exports = router;

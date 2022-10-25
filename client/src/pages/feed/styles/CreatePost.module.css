@@ -128,6 +128,7 @@
   font-size: 18px;
   color: #bec2c6;
   margin-bottom: 10px;
+  pointer-events: none;
 }
 
 .post_button_enabled {
@@ -140,10 +141,6 @@
   font-size: 18px;
   color: #fff;
   margin-bottom: 10px;
-}
-
-.post_button_disabled:hover {
-  cursor: not-allowed;
 }
 
 .post_button_enabled:hover {

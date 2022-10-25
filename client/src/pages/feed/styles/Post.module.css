@@ -7,6 +7,7 @@
     0 8px 10px -6px rgb(0 0 0 / 0.1);
   padding: 10px 20px;
   background-color: #fff;
+  position: relative;
 }
 
 /* POST HEADER */
@@ -153,4 +154,25 @@
 
 .hide {
   display: none;
+}
+
+/* delete btn */
+.delete_btn_container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.delete_btn {
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  background-color: #ff0000;
+}
+
+.delete_btn:hover {
+  background-color: #cc0000;
 }
