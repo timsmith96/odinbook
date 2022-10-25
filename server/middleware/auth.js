@@ -4,8 +4,8 @@ const User = require('../models/user');
 // middleware - runs when user wants to access protected route
 const cookieJwtAuth = async (req, res, next) => {
   // get the token from cookies in the user's request
-  const token = req.headers.authorization.split(' ')[1];
   try {
+    const token = req.headers.authorization.split(' ')[1];
     // verifying the user's token and giving back user (packed up initially) if success
     let user = jwt.verify(token, process.env.JWT_KEY);
     console.log('token validation successful');
