@@ -21,7 +21,12 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3001' }));
+app.use(
+  cors({
+    credentials: true,
+    origin: 'https://cryptic-wave-65159.herokuapp.com/',
+  })
+);
 
 app.use(bodyParser.json());
 
