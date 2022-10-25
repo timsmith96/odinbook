@@ -19,6 +19,7 @@ export default function Controller({ onUserChange }) {
     if (!image || !user) {
       return;
     }
+    console.log('inside submit image');
     setImage(e.target.files[0]);
     const formData = new FormData();
     formData.append('image', image);
@@ -81,7 +82,7 @@ export default function Controller({ onUserChange }) {
               <input
                 type="file"
                 id="file-upload"
-                onChange={(e) => submitImage()}
+                onChange={(e) => submitImage(e)}
                 className={styles.file_input}
                 accept=".jpg,.jpeg,.png"
               />
