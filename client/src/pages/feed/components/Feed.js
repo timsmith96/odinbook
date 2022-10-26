@@ -23,7 +23,7 @@ export default function Feed() {
 
   // making GET request to /posts to get all the posts
   const getPosts = async () => {
-    const res = await fetch('https://cryptic-wave-65159.herokuapp.com/posts', {
+    const res = await fetch('https://localhost:3000/posts', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -65,7 +65,7 @@ export default function Feed() {
     const formData = new FormData();
     formData.append('text', post);
     formData.append('image', image);
-    const res = await fetch('https://cryptic-wave-65159.herokuapp.com/posts', {
+    const res = await fetch('https://localhost:3000/posts', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
