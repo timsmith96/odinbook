@@ -11,7 +11,7 @@ export default function Requests({ onSetUser }) {
       <h2 className={styles.title}>Friend requests</h2>
       {user.friendRequests.length === 0 && (
         <h3 className={styles.no_friends}>
-          you don't have any friend requests, sorry :(
+          you don't have any friend requests, sorry :'(
         </h3>
       )}
       <ul className={styles.suggestions_list}>
