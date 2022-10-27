@@ -40,6 +40,14 @@ export default function Signin({
       >
         Create New Account
       </button>
+      <button
+        id={styles.new_account_btn}
+        className={styles.button}
+        onClick={onSubmit}
+        data-demo="demo"
+      >
+        Demo an Existing Account
+      </button>
       {userCreated && (
         <p className={styles.created_success}>
           Account created succesfully - please sign in above

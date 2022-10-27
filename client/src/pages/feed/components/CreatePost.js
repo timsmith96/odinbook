@@ -14,6 +14,7 @@ export default function CreatePost({
   onCloseClick,
   image,
   user,
+  creatingPost,
 }) {
   return (
     <div className={`${styles.create_post} ${display ? '' : styles.hide}`}>
@@ -64,16 +65,23 @@ export default function CreatePost({
             </div>
           )}
         </div>
-        <button
-          className={`${
-            textEntered
-              ? styles.post_button_enabled
-              : styles.post_button_disabled
-          }`}
-          type="submit"
-        >
-          Post
-        </button>
+        {!creatingPost && (
+          <button
+            className={`${
+              textEntered
+                ? styles.post_button_enabled
+                : styles.post_button_disabled
+            }`}
+            type="submit"
+          >
+            Post
+          </button>
+        )}
+        {creatingPost && (
+          <button className={styles.post_button_disabled} type="submit">
+            Creating Post...
+          </button>
+        )}
       </form>
     </div>
   );

@@ -12,7 +12,7 @@ export default function Suggestions({ onSetUser }) {
 
   // getting all users to display as suggestions upon inital loading
   const getUsers = async () => {
-    const res = await fetch('https://cryptic-wave-65159.herokuapp.com/users', {
+    const res = await fetch('http://localhost:3000/users', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -29,7 +29,7 @@ export default function Suggestions({ onSetUser }) {
   // making a patch request to to user clicked on to send a friend request to that user
   const handleClick = async (e) => {
     const res = await fetch(
-      `https://cryptic-wave-65159.herokuapp.com/users/addFriend/${e.currentTarget.dataset.user}`,
+      `http://localhost:3000/users/addFriend/${e.currentTarget.dataset.user}`,
       {
         method: 'PATCH',
         mode: 'cors',
