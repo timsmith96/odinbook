@@ -16,6 +16,8 @@ function App() {
   const [password, setPassword] = useState();
   const [signInError, setSignInError] = useState();
   const navigate = useNavigate();
+  const demoUsername = 'testuser';
+  const demoPassword = 'password';
 
   // runs only on inital render, and gets the current user (from session storage in the browser) and sets this as state. Once we have done this the inital time, any further changes to user (like changing profile pic) are done through setState of the user, using the json response from the server
   useEffect(() => {
@@ -49,17 +51,21 @@ function App() {
 
   // // log in form being submitted
   const handleSubmit = async (e) => {
+    e.preventDefault();
     // delete existing storage
     sessionStorage.clear();
     localStorage.clear();
-    e.preventDefault();
-    const res = await fetch('https://localhost:3000/login', {
+    let body = { username: username, password: password };
+    if (e.currentTarget.dataset.demo === 'demo') {
+      body = { username: demoUsername, password: demoPassword };
+    }
+    const res = await fetch('http://localhost:3000/login', {
       method: 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username: username, password: password }),
+      body: JSON.stringify(body),
       credentials: 'include',
     });
     const json = await res.json();

@@ -34,7 +34,7 @@ export default function Post({
 
   // function to handle a user liking or unliking a post
   const handleLike = async () => {
-    const res = await fetch(`https://localhost:3000/posts/${id}`, {
+    const res = await fetch(`http://localhost:3000/posts/${id}`, {
       method: 'PATCH',
       mode: 'cors',
       credentials: 'include',
@@ -67,7 +67,7 @@ export default function Post({
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     setCommentInput('');
-    const res = await fetch(`https://localhost:3000/posts/${id}`, {
+    const res = await fetch(`http://localhost:3000/posts/${id}`, {
       method: 'PATCH',
       mode: 'cors',
       credentials: 'include',
@@ -85,7 +85,7 @@ export default function Post({
   // DELETE request to delete a post
   const handleDelete = async () => {
     console.log('delete clicked');
-    await fetch(`https://localhost:3000/posts/${id}`, {
+    await fetch(`http://localhost:3000/posts/${id}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'include',

@@ -14,6 +14,7 @@ export default function Feed() {
   const [image, setImage] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState();
+  const [creatingPost, setCreatingPost] = useState(false);
   const navigate = useNavigate();
   const user = useContext(UserContext);
 
@@ -23,7 +24,7 @@ export default function Feed() {
 
   // making GET request to /posts to get all the posts
   const getPosts = async () => {
-    const res = await fetch('https://localhost:3000/posts', {
+    const res = await fetch('http://localhost:3000/posts', {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -33,7 +34,6 @@ export default function Feed() {
       },
     });
     const json = await res.json();
-    console.log(json);
     setPosts(json);
     setIsLoading(false);
   };
@@ -62,10 +62,11 @@ export default function Feed() {
   // making POST request to /posts to create a new post
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setCreatingPost(true);
     const formData = new FormData();
     formData.append('text', post);
     formData.append('image', image);
-    const res = await fetch('https://localhost:3000/posts', {
+    const res = await fetch('http://localhost:3000/posts', {
       method: 'POST',
       mode: 'cors',
       credentials: 'include',
@@ -76,6 +77,7 @@ export default function Feed() {
     });
     const json = await res.json();
     if (res.status === 403) {
+      setCreatingPost(false);
       navigate('/');
     } else {
       window.location.reload();
@@ -131,6 +133,7 @@ export default function Feed() {
         display={showModal}
         onCloseClick={handleCloseClick}
         image={image}
+        creatingPost={creatingPost}
         onRemoveImage={handleRemoveImage}
       />
     </div>

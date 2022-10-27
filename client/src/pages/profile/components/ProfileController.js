@@ -15,7 +15,7 @@ export default function Controller({ onUserChange }) {
     if (!user) {
       return;
     }
-    const res = await fetch(`https://localhost:3000/posts/user`, {
+    const res = await fetch(`http://localhost:3000/posts/user`, {
       method: 'GET',
       mode: 'cors',
       credentials: 'include',
@@ -32,7 +32,7 @@ export default function Controller({ onUserChange }) {
     console.log(image);
     const formData = new FormData();
     formData.append('image', image);
-    const res = await fetch(`https://localhost:3000/users/${user._id}`, {
+    const res = await fetch(`http://localhost:3000/users/${user._id}`, {
       method: 'PATCH',
       mode: 'cors',
       credentials: 'include',
