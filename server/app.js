@@ -24,7 +24,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: 'http://localhost:3001',
+    origin: 'https://charming-custard-50007f.netlify.app',
   })
 );
 
