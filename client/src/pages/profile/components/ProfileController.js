@@ -16,7 +16,7 @@ export default function Controller({ onUserChange }) {
       return;
     }
     const res = await fetch(
-      `https://cryptic-wave-65159.herokuapp.com//posts/user`,
+      `'https://cryptic-wave-65159.herokuapp.com//posts/user`,
       {
         method: 'GET',
         mode: 'cors',
@@ -36,7 +36,7 @@ export default function Controller({ onUserChange }) {
     const formData = new FormData();
     formData.append('image', image);
     const res = await fetch(
-      `https://cryptic-wave-65159.herokuapp.com//users/${user._id}`,
+      `'https://cryptic-wave-65159.herokuapp.com//users/${user._id}`,
       {
         method: 'PATCH',
         mode: 'cors',

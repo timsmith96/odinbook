@@ -64,7 +64,7 @@ function App() {
     } else {
       setLoggingIn(true);
     }
-    const res = await fetch('https://cryptic-wave-65159.herokuapp.com//login', {
+    const res = await fetch('https://cryptic-wave-65159.herokuapp.com/login', {
       method: 'POST',
       mode: 'cors',
       headers: {

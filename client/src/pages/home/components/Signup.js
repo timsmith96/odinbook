@@ -13,7 +13,7 @@ export default function Signup({
 }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('https://cryptic-wave-65159.herokuapp.com//users', {
+    const res = await fetch('https://cryptic-wave-65159.herokuapp.com/users', {
       method: 'POST',
       mode: 'cors',
       headers: {
