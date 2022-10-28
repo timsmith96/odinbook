@@ -35,7 +35,7 @@ export default function Post({
   // function to handle a user liking or unliking a post
   const handleLike = async () => {
     const res = await fetch(
-      `https://cryptic-wave-65159.herokuapp.com//posts/${id}`,
+      `https://cryptic-wave-65159.herokuapp.com/posts/${id}`,
       {
         method: 'PATCH',
         mode: 'cors',
