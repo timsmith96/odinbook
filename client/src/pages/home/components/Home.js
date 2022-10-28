@@ -11,6 +11,8 @@ export default function Home({
   onPasswordInputChange,
   signInError,
   setSignInError,
+  loggingIn,
+  loggingDemoIn,
 }) {
   const formTemplate = {
     firstName: '',
@@ -58,6 +60,8 @@ export default function Home({
           onPasswordInputChange={onPasswordInputChange}
           signInError={signInError}
           userCreated={userCreated}
+          loggingIn={loggingIn}
+          loggingDemoIn={loggingDemoIn}
         />
       </main>
       <Signup

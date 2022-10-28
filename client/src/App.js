@@ -15,6 +15,8 @@ function App() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [signInError, setSignInError] = useState();
+  const [loggingIn, setLoggingIn] = useState(false);
+  const [loggingDemoIn, setLoggingDemoIn] = useState(false);
   const navigate = useNavigate();
   const demoUsername = 'testuser';
   const demoPassword = 'password';
@@ -57,9 +59,12 @@ function App() {
     localStorage.clear();
     let body = { username: username, password: password };
     if (e.currentTarget.dataset.demo === 'demo') {
+      setLoggingDemoIn(true);
       body = { username: demoUsername, password: demoPassword };
+    } else {
+      setLoggingIn(true);
     }
-    const res = await fetch('https://cryptic-wave-65159.herokuapp.com/login', {
+    const res = await fetch('http://localhost:3000/login', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -72,6 +77,7 @@ function App() {
     if (res.status === 401) {
       setSignInError(json);
       // if the log in is successful, the server gives us the user object which we are then storing in state here, (top level component) and then we use context to make it available to the components which need it
+      setLoggingIn(false);
     } else {
       sessionStorage.setItem('user', JSON.stringify(json.user));
       localStorage.setItem('token', json.token);
@@ -100,6 +106,8 @@ function App() {
               onUserInputChange={handleUserInputChange}
               signInError={signInError}
               setSignInError={setSignInError}
+              loggingIn={loggingIn}
+              loggingDemoIn={loggingDemoIn}
             />
           }
         />

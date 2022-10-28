@@ -7,7 +7,28 @@ export default function Signin({
   onPasswordInputChange,
   signInError,
   userCreated,
+  loggingIn,
+  loggingDemoIn,
 }) {
+  let button;
+  if (loggingDemoIn) {
+    button = (
+      <button id={styles.logging_in_btn} className={styles.button}>
+        Logging in...
+      </button>
+    );
+  } else {
+    button = (
+      <button
+        id={styles.new_account_btn}
+        className={styles.button}
+        onClick={onSubmit}
+        data-demo="demo"
+      >
+        Demo existing account
+      </button>
+    );
+  }
   return (
     <div className={styles.form_wrapper}>
       <form className={styles.form} onSubmit={onSubmit}>
@@ -26,9 +47,19 @@ export default function Signin({
             onChange={onPasswordInputChange}
             required={true}
           />
-          <button className={styles.button} type="submit">
-            Log in
-          </button>
+          {loggingIn ? (
+            <button
+              className={styles.button}
+              id={styles.logging_in}
+              type="submit"
+            >
+              Logging in...
+            </button>
+          ) : (
+            <button className={styles.button} type="submit">
+              Log in
+            </button>
+          )}
           <p className={styles.error}>{signInError}</p>
         </div>
       </form>
@@ -40,14 +71,7 @@ export default function Signin({
       >
         Create New Account
       </button>
-      <button
-        id={styles.new_account_btn}
-        className={styles.button}
-        onClick={onSubmit}
-        data-demo="demo"
-      >
-        Demo an Existing Account
-      </button>
+      {button}
       {userCreated && (
         <p className={styles.created_success}>
           Account created succesfully - please sign in above

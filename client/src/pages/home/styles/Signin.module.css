@@ -63,6 +63,20 @@
   font-size: 17px;
 }
 
+/* LOGGING IN BUTTON */
+#logging_in_btn {
+  background-color: #36a420;
+  width: 65%;
+  margin: 30px auto;
+  display: block;
+  font-size: 17px;
+  pointer-events: none;
+}
+
+#logging_in {
+  background-color: #166fe5;
+}
+
 #new_account_btn:hover {
   background: #36a420;
 }
