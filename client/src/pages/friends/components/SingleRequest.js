@@ -28,7 +28,7 @@ export default function SingleRequest({
 
   const handleRejectClick = async (e) => {
     const res = await fetch(
-      `'https://cryptic-wave-65159.herokuapp.com//users/rejectfriend/${e.currentTarget.dataset.id}`,
+      `https://cryptic-wave-65159.herokuapp.com//users/rejectfriend/${e.currentTarget.dataset.id}`,
       {
         method: 'PATCH',
         mode: 'cors',

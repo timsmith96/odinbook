@@ -29,7 +29,7 @@ export default function Suggestions({ onSetUser }) {
   // making a patch request to to user clicked on to send a friend request to that user
   const handleClick = async (e) => {
     const res = await fetch(
-      `'https://cryptic-wave-65159.herokuapp.com//users/addFriend/${e.currentTarget.dataset.user}`,
+      `https://cryptic-wave-65159.herokuapp.com//users/addFriend/${e.currentTarget.dataset.user}`,
       {
         method: 'PATCH',
         mode: 'cors',

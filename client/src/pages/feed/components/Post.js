@@ -35,7 +35,7 @@ export default function Post({
   // function to handle a user liking or unliking a post
   const handleLike = async () => {
     const res = await fetch(
-      `'https://cryptic-wave-65159.herokuapp.com//posts/${id}`,
+      `https://cryptic-wave-65159.herokuapp.com//posts/${id}`,
       {
         method: 'PATCH',
         mode: 'cors',
@@ -71,7 +71,7 @@ export default function Post({
     e.preventDefault();
     setCommentInput('');
     const res = await fetch(
-      `'https://cryptic-wave-65159.herokuapp.com//posts/${id}`,
+      `https://cryptic-wave-65159.herokuapp.com/posts/${id}`,
       {
         method: 'PATCH',
         mode: 'cors',
@@ -91,7 +91,7 @@ export default function Post({
   // DELETE request to delete a post
   const handleDelete = async () => {
     console.log('delete clicked');
-    await fetch(`'https://cryptic-wave-65159.herokuapp.com//posts/${id}`, {
+    await fetch(`https://cryptic-wave-65159.herokuapp.com/posts/${id}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'include',
