@@ -34,15 +34,18 @@ export default function Post({
 
   // function to handle a user liking or unliking a post
   const handleLike = async () => {
-    const res = await fetch(`http://localhost:3000/posts/${id}`, {
-      method: 'PATCH',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        liked: liked,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
+    const res = await fetch(
+      `https://cryptic-wave-65159.herokuapp.com//posts/${id}`,
+      {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          liked: liked,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    );
     // API gives us back the new list of likes for the post...
     const json = await res.json();
     // ...which we use to set the state to be the list of likes for the post
@@ -67,17 +70,20 @@ export default function Post({
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     setCommentInput('');
-    const res = await fetch(`http://localhost:3000/posts/${id}`, {
-      method: 'PATCH',
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        comments: 'true',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ text: commentInput }),
-    });
+    const res = await fetch(
+      `https://cryptic-wave-65159.herokuapp.com//posts/${id}`,
+      {
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          comments: 'true',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ text: commentInput }),
+      }
+    );
     const json = await res.json();
     setUpdatedComments(json);
   };
@@ -85,7 +91,7 @@ export default function Post({
   // DELETE request to delete a post
   const handleDelete = async () => {
     console.log('delete clicked');
-    await fetch(`http://localhost:3000/posts/${id}`, {
+    await fetch(`https://cryptic-wave-65159.herokuapp.com//posts/${id}`, {
       method: 'DELETE',
       mode: 'cors',
       credentials: 'include',

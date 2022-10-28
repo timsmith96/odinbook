@@ -10,7 +10,7 @@ export default function SingleRequest({
 }) {
   const handleAcceptClick = async (e) => {
     const res = await fetch(
-      `http://localhost:3000/users/acceptFriend/${e.currentTarget.dataset.id}`,
+      `https://cryptic-wave-65159.herokuapp.com//users/acceptFriend/${e.currentTarget.dataset.id}`,
       {
         method: 'PATCH',
         mode: 'cors',
@@ -28,7 +28,7 @@ export default function SingleRequest({
 
   const handleRejectClick = async (e) => {
     const res = await fetch(
-      `http://localhost:3000/users/rejectfriend/${e.currentTarget.dataset.id}`,
+      `https://cryptic-wave-65159.herokuapp.com//users/rejectfriend/${e.currentTarget.dataset.id}`,
       {
         method: 'PATCH',
         mode: 'cors',
