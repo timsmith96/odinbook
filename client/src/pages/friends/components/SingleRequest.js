@@ -10,7 +10,7 @@ export default function SingleRequest({
 }) {
   const handleAcceptClick = async (e) => {
     const res = await fetch(
-      `'https://cryptic-wave-65159.herokuapp.com/users/acceptFriend/${e.currentTarget.dataset.id}`,
+      `https://cryptic-wave-65159.herokuapp.com/users/acceptFriend/${e.currentTarget.dataset.id}`,
       {
         method: 'PATCH',
         mode: 'cors',
