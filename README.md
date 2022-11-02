@@ -21,4 +21,3 @@ A Facebook clone project, making use of:
 
 https://charming-custard-50007f.netlify.app/
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d9b6928b-be59-4dda-b962-b8757522c8fb/deploy-status)](https://app.netlify.com/sites/charming-custard-50007f/deploys)
