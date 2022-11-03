@@ -82,11 +82,11 @@ function App() {
     setSelected(e.currentTarget.dataset.name);
   };
 
-  const onDemoClick = () => {
+  const onDemoClick = (e) => {
     setLoggingDemoIn(true);
     setUsername('testuser');
     setPassword('password');
-    handleSubmit();
+    handleSubmit(e);
   };
 
   if (isLoading) {
