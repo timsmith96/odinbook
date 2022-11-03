@@ -57,20 +57,14 @@ function App() {
     // delete existing storage
     sessionStorage.clear();
     localStorage.clear();
-    let body = { username: username, password: password };
-    if (e.currentTarget.dataset.demo === 'demo') {
-      setLoggingDemoIn(true);
-      body = { username: demoUsername, password: demoPassword };
-    } else {
-      setLoggingIn(true);
-    }
+    setLoggingIn(true);
     const res = await fetch('https://cryptic-wave-65159.herokuapp.com/login', {
       method: 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ username: username, password: password }),
       credentials: 'include',
     });
     const json = await res.json();
@@ -88,6 +82,13 @@ function App() {
 
   const handleClick = (e) => {
     setSelected(e.currentTarget.dataset.name);
+  };
+
+  const onDemoClick = () => {
+    setLoggingDemoIn(true);
+    setUsername('testuser');
+    setPassword('password');
+    handleSubmit();
   };
 
   if (isLoading) {
@@ -108,6 +109,7 @@ function App() {
               setSignInError={setSignInError}
               loggingIn={loggingIn}
               loggingDemoIn={loggingDemoIn}
+              onDemoClick={onDemoClick}
             />
           }
         />

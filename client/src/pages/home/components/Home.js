@@ -13,6 +13,7 @@ export default function Home({
   setSignInError,
   loggingIn,
   loggingDemoIn,
+  onDemoClick
 }) {
   const formTemplate = {
     firstName: '',
@@ -62,6 +63,7 @@ export default function Home({
           userCreated={userCreated}
           loggingIn={loggingIn}
           loggingDemoIn={loggingDemoIn}
+          onDemoClick={onDemoClick}
         />
       </main>
       <Signup

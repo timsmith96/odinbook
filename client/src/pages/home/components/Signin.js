@@ -9,6 +9,7 @@ export default function Signin({
   userCreated,
   loggingIn,
   loggingDemoIn,
+  onDemoClick,
 }) {
   let button;
   if (loggingDemoIn) {
@@ -22,7 +23,7 @@ export default function Signin({
       <button
         id={styles.new_account_btn}
         className={styles.button}
-        onClick={onSubmit}
+        onClick={onDemoClick}
         data-demo="demo"
       >
         Demo existing account
