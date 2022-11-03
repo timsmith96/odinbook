@@ -58,7 +58,8 @@ function App() {
     let body = { username: username, password: password };
     if (e.currentTarget.dataset.demo === 'demo') {
       setLoggingDemoIn(true);
-      body = { username: 'testuser', password: 'password' };
+      setUsername('username');
+      setPassword('password');
     } else {
       setLoggingIn(true);
     }
@@ -68,7 +69,7 @@ function App() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({username: username, password: password}),
       credentials: 'include',
     });
     const json = await res.json();
