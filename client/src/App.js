@@ -51,6 +51,7 @@ function App() {
 
   // // log in form being submitted
   const handleSubmit = async (e) => {
+    console.log(username, password);
     e.preventDefault();
     // delete existing storage
     sessionStorage.clear();
