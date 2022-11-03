@@ -18,8 +18,6 @@ function App() {
   const [loggingIn, setLoggingIn] = useState(false);
   const [loggingDemoIn, setLoggingDemoIn] = useState(false);
   const navigate = useNavigate();
-  const demoUsername = 'testuser';
-  const demoPassword = 'password';
 
   // runs only on inital render, and gets the current user (from session storage in the browser) and sets this as state. Once we have done this the inital time, any further changes to user (like changing profile pic) are done through setState of the user, using the json response from the server
   useEffect(() => {
