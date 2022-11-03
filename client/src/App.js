@@ -52,7 +52,7 @@ function App() {
   // // log in form being submitted
   const handleSubmit = async (e) => {
     console.log(username, password);
-    e.preventDefault();
+    if (e) e.preventDefault();
     // delete existing storage
     sessionStorage.clear();
     localStorage.clear();
@@ -83,12 +83,19 @@ function App() {
     setSelected(e.currentTarget.dataset.name);
   };
 
-  const onDemoClick = (e) => {
-    setLoggingDemoIn(true);
+  const onDemoClick = () => {
     setUsername('testuser');
     setPassword('password');
-    handleSubmit(e);
+    setLoggingDemoIn(true);
   };
+
+  useEffect(() => {
+    if (!loggingDemoIn) {
+      return;
+    } else {
+      handleSubmit();
+    }
+  }, [loggingDemoIn]);
 
   if (isLoading) {
     return <h1>loading</h1>;
