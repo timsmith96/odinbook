@@ -58,7 +58,7 @@ function App() {
     let body = { username: username, password: password };
     if (e.currentTarget.dataset.demo === 'demo') {
       setLoggingDemoIn(true);
-      setUsername('username');
+      setUsername('testuser');
       setPassword('password');
     } else {
       setLoggingIn(true);
