@@ -10,17 +10,27 @@ A Facebook clone project, making use of:
 
 ## Features
 
+### Authenticaion
+
 - User authentication using JWT
-- Passing hashing with bcryptjs
+- Password hashing with bcryptjs
+
+### Users
 - Users can sign up for an account with their details
 - Users will only see the home page until they have signed in with their credentials
 - Users can upload an avatar photo and create posts
+
+### Friends
 - Users can send and accept/reject friend requests
 - Users can view and like posts created by friends
+
+### Posts
 - Users can view and delete their own posts
 - Users can view and create comments on posts
+
+### Design
 - Fully responsive layout and design
-- Feature for users to log into the app without creating an account - via the demo button
+- Feature for users to log into the app without creating an account via the demo button
 
 ## Demo
 
